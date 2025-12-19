@@ -1,2 +1,2 @@
 # Stage3_SARS-CoV-2_Analysis
-Trajectory analysis on scRNA-seq data from SARS-CoV-2-infected human bronchial epithelial cells (HBEC)
+Single-cell RNA-seq analysis of SARS-CoV-2 infection in human bronchial epithelial cells (HBEC) including trajectory analysis. 
