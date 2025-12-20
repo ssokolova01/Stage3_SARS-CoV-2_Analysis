@@ -7,6 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1AY0mnbxe4wSGdMC1PQx3Ne3e5ixjyLJH
 """
 
+# Install packages
 !pip install scanpy
 !pip install anndata
 !pip3 install igraph
@@ -20,31 +21,35 @@ Original file is located at
 import scanpy as sc
 import anndata as ad
 import numpy as np
-#import scvelo as scv
+import matplotlib.pyplot as plt
 
+# Create directories for datasets
 !mkdir -p GSM5082289_Mock
 !mkdir -p GSM5082290_1dpi
 !mkdir -p GSM5082291_2dpi
 !mkdir -p GSM5082292_3dpi
 
+# Upload Mock dataset
 !wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5082nnn/GSM5082289/suppl/GSM5082289_mock_barcodes.tsv.gz -O GSM5082289_Mock/barcodes.tsv.gz
 !wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5082nnn/GSM5082289/suppl/GSM5082289_mock_features.tsv.gz -O GSM5082289_Mock/features.tsv.gz
 !wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5082nnn/GSM5082289/suppl/GSM5082289_mock_matrix.mtx.gz -O GSM5082289_Mock/matrix.mtx.gz
 
+# Upload Day 1 dataset
 !wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5082nnn/GSM5082290/suppl/GSM5082290_1dpi_barcodes.tsv.gz -O GSM5082290_1dpi/barcodes.tsv.gz
 !wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5082nnn/GSM5082290/suppl/GSM5082290_1dpi_features.tsv.gz -O GSM5082290_1dpi/features.tsv.gz
 !wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5082nnn/GSM5082290/suppl/GSM5082290_1dpi_matrix.mtx.gz -O GSM5082290_1dpi/matrix.mtx.gz
 
+# Upload Day 2 dataset
 !wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5082nnn/GSM5082291/suppl/GSM5082291_2dpi_barcodes.tsv.gz -O GSM5082291_2dpi/barcodes.tsv.gz
 !wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5082nnn/GSM5082291/suppl/GSM5082291_2dpi_features.tsv.gz -O GSM5082291_2dpi/features.tsv.gz
 !wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5082nnn/GSM5082291/suppl/GSM5082291_2dpi_matrix.mtx.gz -O GSM5082291_2dpi/matrix.mtx.gz
 
+# Upload Day 3 dataset
 !wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5082nnn/GSM5082292/suppl/GSM5082292_3dpi_barcodes.tsv.gz -O GSM5082292_3dpi/barcodes.tsv.gz
 !wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5082nnn/GSM5082292/suppl/GSM5082292_3dpi_features.tsv.gz -O GSM5082292_3dpi/features.tsv.gz
 !wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5082nnn/GSM5082292/suppl/GSM5082292_3dpi_matrix.mtx.gz -O GSM5082292_3dpi/matrix.mtx.gz
 
-import scanpy as sc
-
+# Save datasets to variables
 mock_adata = sc.read_10x_mtx('/content/GSM5082289_Mock/')
 dpi1_adata = sc.read_10x_mtx('/content/GSM5082290_1dpi/')
 dpi2_adata = sc.read_10x_mtx('/content/GSM5082291_2dpi/')
@@ -92,39 +97,33 @@ sc.pp.calculate_qc_metrics(
     dpi3_adata, qc_vars=["MT", 'RIBO', 'HB'], inplace=True, log1p=True
 )
 
-import matplotlib.pyplot as plt
-
-plt.rcParams["figure.figsize"] = (5,4)  # Adjust figure size
-plt.rcParams["axes.grid"] = True  # Add grid to plots
-plt.rcParams["axes.edgecolor"] = "black" # Set plot border color
-plt.rcParams["axes.linewidth"] = 1.5 # Set plot border width
-plt.rcParams["axes.facecolor"] = "white" # Set background color
-plt.rcParams["axes.labelcolor"] = "black" # Set label color
-plt.rcParams["xtick.color"] = "black" # Set x-axis tick color
-plt.rcParams["ytick.color"] = "black" # Set y-axis tick color
-plt.rcParams["text.color"] = "black" # Set text color
-
+# Filtering Mock dataset
 sc.pp.filter_cells(mock_adata, min_genes=200)
 sc.pp.filter_genes(mock_adata, min_cells=3)
 mock_adata = mock_adata[mock_adata.obs['pct_counts_MT'] < 10, :]
 
+# Filtering Day 1 dataset
 sc.pp.filter_cells(dpi1_adata, min_genes=200)
 sc.pp.filter_genes(dpi1_adata, min_cells=3)
 dpi1_adata = dpi1_adata[dpi1_adata.obs['pct_counts_MT'] < 10, :]
 
+# Filtering Day 2 dataset
 sc.pp.filter_cells(dpi2_adata, min_genes=200)
 sc.pp.filter_genes(dpi2_adata, min_cells=3)
 dpi2_adata = dpi2_adata[dpi2_adata.obs['pct_counts_MT'] < 10, :]
 
+# Filtering Day 3 dataset
 sc.pp.filter_cells(dpi3_adata, min_genes=200)
 sc.pp.filter_genes(dpi3_adata, min_cells=3)
 dpi3_adata = dpi3_adata[dpi3_adata.obs['pct_counts_MT'] < 10, :]
 
+# Check doublets in the datasets
 sc.pp.scrublet(mock_adata)
 sc.pp.scrublet(dpi1_adata)
 sc.pp.scrublet(dpi2_adata)
 sc.pp.scrublet(dpi3_adata)
 
+# Delete doublets from the datasets
 mock_adata = mock_adata[~mock_adata.obs['predicted_doublet'], :]
 dpi1_adata = dpi1_adata[~dpi1_adata.obs['predicted_doublet'], :]
 dpi2_adata = dpi2_adata[~dpi2_adata.obs['predicted_doublet'], :]
@@ -178,21 +177,7 @@ sc.pl.highly_variable_genes(dpi2_adata)
 sc.pp.highly_variable_genes(dpi3_adata, n_top_genes=2500)
 sc.pl.highly_variable_genes(dpi3_adata)
 
-# MERGE (NORMALIZATION)
-# Copy the data for safety
-#combined_adata.layers["counts"] = combined_adata.X.copy()
-
-# Standardize expression
-#sc.pp.normalize_total(combined_adata)
-#sc.pp.log1p(combined_adata)
-
-# Feature selection (accounting for batch effects)
-#sc.pp.highly_variable_genes(combined_adata, n_top_genes=2500, batch_key='condition')  # KEY: account for batches!
-
-# Plot
-#sc.pl.highly_variable_genes(combined_adata)
-
-# MERGE
+# DATASET MERGE
 
 mock_adata.obs['condition'] = 'Mock'
 dpi1_adata.obs['condition'] = 'Day_1'
@@ -202,14 +187,8 @@ dpi3_adata.obs['condition'] = 'Day_3'
 combined_adata = ad.concat([mock_adata, dpi1_adata, dpi2_adata, dpi3_adata])
 combined_adata.obs_names_make_unique()
 
-# Save
+# Save merged dataset
 combined_adata.write('combined_after_qc.h5ad')
-
-# NOW normalize the combined data
-#combined_adata.layers["counts"] = combined_adata.X.copy()
-#sc.pp.normalize_total(combined_adata)
-#sc.pp.log1p(combined_adata)
-#sc.pp.highly_variable_genes(combined_adata, n_top_genes=2500, batch_key='batch')
 
 # DIMENSIONALITY REDUCTION
 
@@ -217,15 +196,7 @@ combined_adata.write('combined_after_qc.h5ad')
 sc.tl.pca(combined_adata)
 sc.pl.pca_variance_ratio(combined_adata, n_pcs=10, log=False)
 
-# UMAP
-#sc.pp.neighbors(combined_adata, n_pcs=10)
-#sc.tl.umap(combined_adata)
-
-# Visualize by condition
-#sc.pl.umap(combined_adata, color='condition',
- #          title='Combined data - by condition')
-
-# BATCH CORRECTION with BBKNN (replaces sc.pp.neighbors!)
+# BATCH CORRECTION with BBKNN (instead of neighbors method)
 !pip install bbknn
 import bbknn
 
@@ -233,7 +204,7 @@ bbknn.bbknn(combined_adata,
             batch_key='condition',
             n_pcs=10)  # Use 10pcs based on PCA variance plot
 
-# UMAP (bbknn already computed neighbors, so skip sc.pp.neighbors)
+# UMAP 
 sc.tl.umap(combined_adata)
 
 # Visualize by condition
@@ -247,13 +218,11 @@ sc.tl.leiden(combined_adata, resolution=0.5, key_added='leiden_res0_5', flavor="
 
 # Create a figure with 2x2 subplots
 fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-
-# Plot ONE thing per subplot
+# Plot (check clustering and concatination results)
 sc.pl.umap(combined_adata, color='leiden_res0_5', ax=axes[0,0], show=False, title='Clusters')
 sc.pl.umap(combined_adata, color='leiden_res0_5', legend_loc='on data', legend_fontsize=8, ax=axes[1,0], show=False, title='Clusters (labeled)')
 sc.pl.umap(combined_adata, color='condition', ax=axes[0,1], show=False, title='Condition')
 sc.pl.umap(combined_adata, color='condition', ax=axes[1,1], show=False, title='Condition')
-
 plt.tight_layout()
 plt.show()
 
@@ -277,7 +246,7 @@ markers = markers[["source", "target"]]
 
 markers.head()
 
-# Cell type annotation using ULM (Univariate Linear Model)
+# Cell type annotation
 # Estimates cell type scores based on marker gene expression
 dc.mt.ulm(data=combined_adata, net=markers, tmin=2)
 # Extract ULM cell type scores stored in obsm layer
@@ -299,16 +268,13 @@ dict_ann_combined
 
 # Create a figure with subplots
 fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-
 # Annotate clusters with cell type labels using the annotation dictionary
 combined_adata.obs["cell_type"] = combined_adata.obs["leiden_res0_5"].map(dict_ann_combined)
 # Visualization (legend out and on clusters)
 sc.pl.umap(combined_adata, color='cell_type', ax=axes[0], show=False)
 sc.pl.umap(combined_adata, color='cell_type', legend_loc='on data', legend_fontsize=8, ax=axes[1], show=False)
-
 # Adjust title
 plt.suptitle("Annotated Cell Clusters(with NA) - Combined", y=1.0, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
 
@@ -338,7 +304,7 @@ if 'Basal cells' not in current_cell_type_categories:
     new_cell_type_categories = current_cell_type_categories + ['Basal cells']
     combined_adata.obs['cell_type'] = combined_adata.obs['cell_type'].cat.set_categories(new_cell_type_categories)
 
-# Correctly assign cluster 9 (the NA cluster) as 'Basal cells'
+# Assign cluster 9 (the NA cluster) as 'Basal cells'
 combined_adata.obs.loc[combined_adata.obs['leiden_res0_5'] == '9', 'cell_type'] = 'Basal cells'
 
 # Verify no more NAs
@@ -347,14 +313,12 @@ print("\ncombined cell types now:")
 print(combined_adata.obs['cell_type'].value_counts())
 
 # CORRECT THE DICTIONARY ANNOTATION
-# Fix cluster 9 (was NA, should be Basal cells)
+# Fix cluster 9, add to the annotation dictionary
 dict_ann_combined['9'] = 'Basal cells'
-
 # Check the dictionary
 print("Updated dictionary:")
 print(dict_ann_combined)
-
-# Now apply it
+# Apply to dictionary
 combined_adata.obs["cell_type"] = combined_adata.obs["leiden_res0_5"].map(dict_ann_combined)
 
 # Verify
@@ -366,72 +330,15 @@ print(combined_adata.obs['cell_type'].value_counts())
 
 # Create a figure with subplots
 fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-
-
 # Annotate clusters with cell type labels using the annotation dictionary
 combined_adata.obs["cell_type"] = combined_adata.obs["leiden_res0_5"].map(dict_ann_combined)
 # Visualization (legend out and on clusters)
 sc.pl.umap(combined_adata, color='cell_type', ax=axes[0], show=False)
 sc.pl.umap(combined_adata, color='cell_type', legend_loc='on data', legend_fontsize=8, ax=axes[1], show=False)
-
 # Adjust title
 plt.suptitle("Annotated Cell Clusters - Combined", y=1.0, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
-
-plt.rcParams["figure.figsize"] = (5,5)
-sc.pl.umap(combined_adata, color='cell_type', title='Annotated Cell Clusters - Combined')
-
-plt.rcParams["figure.figsize"] = (6,6)
-sc.pl.umap(combined_adata, color='cell_type', legend_loc='on data', legend_fontsize=8, title='Annotated Cell Clusters - Combined')
-
-# CHECK UMAP RESULTS BEFORE ANNOTATION DICTIONNARY APPLICATION FOR UMAP PLOT
-# Look at basal markers in "Airway epithelial cells"
-#basal_markers = ['KRT5', 'KRT14', 'TP63', 'NGFR']
-
-# Subset to airway epithelial cells
-#airway_cells = combined_adata[combined_adata.obs['leiden_res0_5'] == 'Airway epithelial cells']
-
-# Or on UMAP
-#sc.pl.umap(combined_adata, color=['leiden_res0_5', 'KRT5', 'KRT14', 'TP63'], ncols=2)
-
-# CHECK UMAP RESULTS BEFORE ANNOTATION DICTIONNARY APPLICATION FOR UMAP PLOT
-# See which clusters are labeled "Airway epithelial cells"
-#combined_adata.obs['cell_type'] = combined_adata.obs['leiden_res0_5'].map(dict_ann_combined)
-
-#airway_clusters = combined_adata.obs[
- #   combined_adata.obs['cell_type'] == 'Airway epithelial cells'
-#]['leiden_res0_5'].value_counts()
-
-#print("Airway epithelial cells are in these clusters:")
-#print(airway_clusters)
-
-# Check basal marker expression PER CLUSTER
-#sc.pl.violin(combined_adata[combined_adata.obs['cell_type'] == 'Airway epithelial cells'],
- #            keys=['KRT5', 'KRT14', 'TP63'],
-  #           groupby='leiden_res0_5')
-
-# CHECK UMAP RESULTS BEFORE ANNOTATION DICTIONNARY APPLICATION FOR UMAP PLOT
-#print(combined_adata.obs.groupby('leiden_res0_5')['cell_type'].value_counts())
-
-# CHECK UMAP RESULTS BEFORE ANNOTATION DICTIONNARY APPLICATION FOR UMAP PLOT
-# Crosstab view
-#import pandas as pd
-#pd.crosstab(combined_adata.obs['leiden_res0_5'],
- #           combined_adata.obs['cell_type'])
-
-# CHECK UMAP RESULTS BEFORE ANNOTATION DICTIONNARY APPLICATION FOR UMAP PLOT
-# Check if cluster 2 really has basal markers
-#cluster_2 = combined_adata[combined_adata.obs['leiden_res0_5'] == '2']
-
-# Compare ciliated vs basal markers in cluster 2
-#markers_to_check = ['FOXJ1', 'CAPS',  # Ciliated markers
- #                   'KRT5', 'KRT14', 'TP63']  # Basal markers
-
-#sc.pl.violin(cluster_2,
- #            keys=markers_to_check,
-  #           groupby='condition')
 
 # STACK VIOLIN PLOT
 # Find top expressed genes per cell type
@@ -458,61 +365,41 @@ marker_genes_dict_combined = {
   }
 
 # COMBINED STACKED VIOLIN PLOT - FIGURE 3B
-import numpy as np
-import matplotlib.pyplot as plt
 
 # Create the plot
 sc.pl.stacked_violin(combined_adata, marker_genes_dict_combined, cmap='RdBu_r', groupby="cell_type", show=False)
-
 # Adjust title
 plt.suptitle("Marker Gene Expression - Combined", y=1.4, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
 
 # ACE2 and ENO2 genes expression
 fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-
 sc.pl.umap(combined_adata, color=["ENO2"], size=3, cmap='Reds', vmax='p95', title="ENO2", ax=axes[0], show=False)
 sc.pl.umap(combined_adata, color=["ACE2"], size=3, cmap='Reds', vmax='p95', title="ACE2", ax=axes[1], show=False)
-
 # Adjust title
 plt.suptitle("ACE2 and ENO2 Gene Expression - Combined Datasets", y=1.0, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
 
-plt.rcParams["figure.figsize"] = (7,5)
-sc.pl.umap(combined_adata, color=["ENO2"], size=3, cmap='Reds', vmax='p95', title="ENO2 - Combined")
-
-plt.rcParams["figure.figsize"] = (7,5)
-sc.pl.umap(combined_adata, color=["ACE2"], size=3, cmap='Reds', vmax='p95', title="ACE2 - Combined")
-
 # ACE2, CTSL, TMPRSS2, TMPRSS4 genes expression - FIGURE 4A
 fig, axes = plt.subplots(2, 2, figsize=(10, 8))
-
 sc.pl.umap(combined_adata, color=["ACE2"], size=3, cmap='Reds', vmax='p95', title="ACE2", ax=axes[0,0], show=False)
 sc.pl.umap(combined_adata, color=["CTSL"], size=3, cmap='Reds', vmax='p95', title="CTSL", ax=axes[0,1], show=False)
 sc.pl.umap(combined_adata, color=["TMPRSS2"], size=3, cmap='Reds', vmax='p95', title="TMPRSS2", ax=axes[1,0], show=False)
 sc.pl.umap(combined_adata, color=["TMPRSS4"], size=3, cmap='Reds', vmax='p95', title="TMPRSS4", ax=axes[1,1], show=False)
-
 # Adjust title
 plt.suptitle("ACE2, CTSL, TMPRSS2, TMPRSS4 Gene Expression - Combined Datasets", y=1.0, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
 
 # HEATMAP PLOT - FIGURE 4B
 
-import matplotlib.pyplot as plt
-
-# Make Figure 4B (ciliated cells only)
+# Choose ciliated cells data
 ciliated = combined_adata[combined_adata.obs['cell_type'] == 'Ciliated cells']
-
 # Create plot
-sc.pl.heatmap(ciliated,
-              ['ACE2', 'CTSL', 'TMPRSS2','TMPRSS4'],
-              groupby='condition',
+sc.pl.heatmap(ciliated, ['ACE2', 'CTSL', 'TMPRSS2','TMPRSS4'], 
+              groupby='condition', 
               cmap='RdPu',
               swap_axes=True,
               figsize=(4, 5),
@@ -520,48 +407,33 @@ sc.pl.heatmap(ciliated,
               vmax=5,
               show_gene_labels=True,
               show=False)
-
-# 4. Get current figure and add title
+# Get figure and add title
 fig = plt.gcf()
 fig.suptitle('Ciliated Cells', fontsize=12, fontweight='bold', y=0.95)
 plt.savefig('fig4B_ciliated.png', bbox_inches='tight', dpi=300)
 plt.show()
 
-# Check mean expression values
-import numpy as np
-
+# Check mean expression for genes: ACE2, CTSL, TMPRSS2, TMPRSS4
 tmprss2_mean = np.expm1(combined_adata[:, 'TMPRSS2'].X).mean()
 tmprss4_mean = np.expm1(combined_adata[:, 'TMPRSS4'].X).mean()
 ctsl = np.expm1(combined_adata[:, 'CTSL'].X).mean()
 ace2 = np.expm1(combined_adata[:, 'ACE2'].X).mean()
-
 print(f"TMPRSS2 mean expression: {tmprss2_mean:.4f}")
 print(f"TMPRSS4 mean expression: {tmprss4_mean:.4f}")
 print(f"CTSL mean expression: {ctsl:.4f}")
 print(f"ACE2 mean expression: {ace2:.4f}")
 
-# Check in ciliated cells specifically
+# Check these genes in ciliated cells specifically
 ciliated = combined_adata[combined_adata.obs['cell_type'] == 'Ciliated cells']
 tmprss2_cil = np.expm1(ciliated[:, 'TMPRSS2'].X).mean()
 tmprss4_cil = np.expm1(ciliated[:, 'TMPRSS4'].X).mean()
 ctsl_cil = np.expm1(ciliated[:, 'CTSL'].X).mean()
 ace2_cil = np.expm1(ciliated[:, 'ACE2'].X).mean()
-
 print(f"\nIn ciliated cells:")
 print(f"TMPRSS2: {tmprss2_cil:.4f}")
 print(f"TMPRSS4: {tmprss4_cil:.4f}")
 print(f"CTSL: {ctsl_cil:.4f}")
 print(f"ACE2: {ace2_cil:.4f}")
-
-# Check all TMPRSS genes
-tmprss_genes = [g for g in combined_adata.var_names if 'TMPRSS' in g.upper()]
-print("All TMPRSS genes in dataset:")
-print(tmprss_genes)
-
-# Check exact spelling
-print("\nExact match check:")
-print("'TMPRSS2' exact match:", 'TMPRSS2' in combined_adata.var_names)
-print("'TMPRSS4' exact match:", 'TMPRSS4' in combined_adata.var_names)
 
 # TRAJECTORY INFERENCE
 
@@ -571,12 +443,10 @@ sc.tl.draw_graph(combined_adata)
 # Plot visualization
 # Create a figure with subplots
 fig, axes = plt.subplots(1, 2, figsize=(16, 8))
-
 plt.rcParams["figure.figsize"] = (8,8)
 sc.pl.draw_graph(combined_adata, color='cell_type', size = 8, legend_fontsize=10, ax=axes[0], show=False)
 plt.rcParams["figure.figsize"] = (8,8)
 sc.pl.draw_graph(combined_adata, color='cell_type', size = 8, legend_fontsize=8, legend_loc='on data', ax=axes[1], show=False)
-
 plt.tight_layout()
 plt.show()
 
@@ -592,20 +462,16 @@ sc.tl.draw_graph(combined_adata, init_pos='paga')
 # Visualization with legend out of plot
 # Create a figure with subplots
 fig, axes = plt.subplots(1, 2, figsize=(16, 8))
-
 plt.rcParams["figure.figsize"] = (8,8)
 sc.pl.draw_graph(combined_adata, color='cell_type', size = 8, legend_fontsize=10, ax=axes[0], show=False)
-
 plt.rcParams["figure.figsize"] = (8,8)
 sc.pl.draw_graph(combined_adata, color='cell_type', size = 8, legend_fontsize=10, legend_loc='on data', ax=axes[1], show=False)
-
 # Adjust title
 plt.suptitle("draw_graph - Combined Datasets", y=1.0, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
 
-# Combining plot and graph visualization
+# Combining and comparing plot and graph visualization
 plt.rcParams["figure.figsize"] = (8,8)
 # Adjust subplot spacing
 sc.pl.paga_compare(combined_adata, threshold=0.03, color='cell_type', frameon=True, edges=True, size = 10, node_size_scale=5, legend_fontsize = 8, show=False)
@@ -614,37 +480,26 @@ plt.suptitle("PAGA/UMAP Comparison - Combined Datasets", y=0.95, fontsize=14, fo
 plt.tight_layout()
 plt.show()
 
-# Find a Mock ciliated cell
+# ROOT IDENTIFICATION FOR PSEUDOTIME PLOT
+# Find Mock ciliated cell (as a source of viral invasion)
 mock_ciliated_cells = combined_adata[
     (combined_adata.obs['condition'] == 'Mock') &
     (combined_adata.obs['cell_type'] == 'Ciliated cells')
 ]
-
 print(f"Found {len(mock_ciliated_cells)} Mock ciliated cells")
 
 # Use first one as root
 root_cell_name = mock_ciliated_cells.obs.index[0]
 root_cell_index = np.where(combined_adata.obs.index == root_cell_name)[0][0]
-
 # Set iroot
 combined_adata.uns['iroot'] = root_cell_index
-
 print(f"Set iroot to cell: {root_cell_name} (index {root_cell_index})")
-
 # Recalculate pseudotime
 sc.tl.dpt(combined_adata)
-
-print("✓ Pseudotime recalculated!")
-
+print("Pseudotime recalculated!")
 # Check it worked - Mock should be low pseudotime now
 print("\nPseudotime by condition:")
 print(combined_adata.obs.groupby('condition')['dpt_pseudotime'].mean())
-
-# Check if PAGA was computed
-print("PAGA computed?", 'paga' in combined_adata.uns)
-
-# Check if diffusion map was computed
-print("Diffusion map computed?", 'diffmap_evals' in combined_adata.uns)
 
 # Check the root cell condition
 root_cell_name = combined_adata.obs.index[combined_adata.uns['iroot']]
@@ -652,48 +507,37 @@ print(f"\nRoot cell: {root_cell_name}")
 print(f"Root cell condition: {combined_adata.obs.loc[root_cell_name, 'condition']}")
 print(f"Root cell type: {combined_adata.obs.loc[root_cell_name, 'cell_type']}")
 
-# 1. Recompute neighbors if needed
+# APPLY NEIGHBORS FOR PSEUDOTIME ROOT REPOSITION
+# Recompute neighbors
 sc.pp.neighbors(combined_adata, n_neighbors=15, n_pcs=30)
-
-# 2. Recompute PAGA
+# Recompute PAGA
 sc.tl.paga(combined_adata, groups='cell_type')
-
-# 3. Reinitialize graph with PAGA
+# Reinitialize graph with PAGA
 sc.tl.draw_graph(combined_adata, init_pos='paga')
-
-# 4. Find Mock ciliated cell (picking from largest Mock ciliated cluster)
+# Find Mock ciliated cell (picking from largest Mock ciliated cluster)
 mock_ciliated = combined_adata[(combined_adata.obs['condition'] == 'Mock') & (combined_adata.obs['cell_type'] == 'Ciliated cells')]
-
-# Try middle cell instead of first
+# Take another cell from Mock dataset (middle, not the first one)
 middle_idx = len(mock_ciliated) // 2
 root_cell_name = mock_ciliated.obs.index[middle_idx]
-
-# 5. Set iroot
+# Set iroot
 combined_adata.uns['iroot'] = np.flatnonzero(combined_adata.obs.index == root_cell_name)[0]
-
-print(f"Root cell: {root_cell_name}")
-print(f"Root index: {combined_adata.uns['iroot']}")
-
-# 6. Compute diffusion map with MORE components
-sc.tl.diffmap(combined_adata, n_comps=30)  # More components!
-
-# 7. Compute pseudotime
+# Compute diffusion map (more components to take)
+sc.tl.diffmap(combined_adata, n_comps=30)
+# Compute pseudotime
 sc.tl.dpt(combined_adata)
 
-# 8. CHECK RESULTS
-print("\n=== PSEUDOTIME BY CONDITION ===")
+# CHECK PSEUDOTIME ANALYSIS RESULTS (QUANTIFICATION)
+print("\nPSEUDOTIME BY CONDITION:")
 condition_pseudotime = combined_adata.obs.groupby('condition')['dpt_pseudotime'].mean().sort_values()
 print(condition_pseudotime)
-
-print("\n=== PSEUDOTIME RANGE ===")
+print("\nPSEUDOTIME RANGE:")
 print(f"Min: {combined_adata.obs['dpt_pseudotime'].min():.3f}")
 print(f"Max: {combined_adata.obs['dpt_pseudotime'].max():.3f}")
-
-print("\n=== PSEUDOTIME BY CELL TYPE ===")
+print("\nPSEUDOTIME BY CELL TYPE:")
 celltype_pseudotime = combined_adata.obs.groupby('cell_type')['dpt_pseudotime'].mean().sort_values()
 print(celltype_pseudotime)
 
-# Plot visualization
+# PAGA plot visualization after recalculation of the root
 plt.rcParams["figure.figsize"] = (8,8)
 sc.pl.paga(combined_adata, color=['cell_type'], fontsize=8, node_size_scale=5, title='PAGA - Combined Datasets')
 
@@ -707,58 +551,18 @@ plt.tight_layout()
 plt.show()
 
 # Check cell type distribution by condition
-print("\n=== CELL TYPE COMPOSITION BY CONDITION ===")
+print("\nCELL TYPE COMPOSITION BY CONDITION:")
 comp = combined_adata.obs.groupby(['condition', 'cell_type']).size().unstack(fill_value=0)
 print(comp)
-
 # Check proportion
-print("\n=== PROPORTIONS ===")
+print("\nPROPORTIONS:")
 print(comp.div(comp.sum(axis=1), axis=0))
 
-# Pseudotime plot
-#import numpy as np
-#combined_adata.uns['iroot'] = np.flatnonzero(combined_adata.obs['leiden_res0_5'] == '9')[0]
-#sc.tl.dpt(combined_adata)
-
-# Comparing pseudotime plot and cell annotated UMAP plot
+# Pseudotime plot and cell annotated UMAP plot
 plt.rcParams["figure.figsize"] = (8,8)
 sc.pl.draw_graph(combined_adata, color=['dpt_pseudotime', 'cell_type'], legend_loc='on data', legend_fontsize = 10, size = 24, show=False)
 # Adjust title
 plt.suptitle("Pseudotime on UMAP/draw_graph - Combined Datasets", y=0.98, fontsize=14, fontweight='bold')
-plt.tight_layout()
-plt.show()
-
-# Comparing pseudotime plot and cell annotated UMAP plot
-plt.rcParams["figure.figsize"] = (8,8)
-sc.pl.draw_graph(combined_adata, color=['dpt_pseudotime', 'cell_type'], legend_loc='on data', legend_fontsize = 10, size = 24, show=False)
-# Adjust title
-plt.suptitle("Pseudotime on UMAP/draw_graph - Combined Datasets", y=0.98, fontsize=14, fontweight='bold')
-plt.tight_layout()
-plt.show()
-
-# Comparing pseudotime plot and cell annotated UMAP plot
-plt.rcParams["figure.figsize"] = (8,8)
-sc.pl.draw_graph(combined_adata, color=['dpt_pseudotime', 'condition', 'cell_type'], legend_loc='on data', legend_fontsize = 8, size = 24)
-
-# Violin or box plot showing pseudotime distribution per condition
-plt.rcParams["figure.figsize"] = (6,6)
-sc.pl.violin(combined_adata, keys='dpt_pseudotime', groupby='condition', rotation=45)
-
-# Shows how key genes change along trajectory
-# Create a figure with subplots
-plt.rcParams["figure.figsize"] = (4,4)
-sc.pl.draw_graph(combined_adata, color=['dpt_pseudotime', 'ACE2', 'ENO2','TMPRSS2','CTSL', 'TMPRSS4'], ncols=2, size=12, cmap='viridis')
-
-# Shows how key genes change along trajectory
-fig, axes = plt.subplots(1, 3, figsize=(18, 6))
-plt.rcParams["figure.figsize"] = (4,4)
-sc.pl.draw_graph(combined_adata, color=['dpt_pseudotime'], ncols=2, cmap='viridis', size=12, ax=axes[0], show=False)
-sc.pl.draw_graph(combined_adata, color=['ACE2'], ncols=2, cmap='viridis', size=12, ax=axes[1], show=False)
-sc.pl.draw_graph(combined_adata, color=['ENO2'], ncols=2, cmap='viridis', size=12, ax=axes[2], show=False)
-
-# Adjust title
-plt.suptitle("Gene Expression along Pseudotime - Combined Datasets", y=1.0, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
 
@@ -768,13 +572,12 @@ plt.rcParams["figure.figsize"] = (4,4)
 sc.pl.draw_graph(combined_adata, color=['dpt_pseudotime'], ncols=2, cmap='viridis', size=12, ax=axes[0], show=False)
 sc.pl.draw_graph(combined_adata, color=['ACE2'], ncols=2, cmap='viridis', size=12, ax=axes[1], show=False)
 sc.pl.draw_graph(combined_adata, color=['ENO2'], ncols=2, cmap='viridis', size=12, ax=axes[2], show=False)
-
 # Adjust title
 plt.suptitle("Gene Expression along Pseudotime - Combined Datasets", y=1.0, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
 
+# Gene Expression in Pseudotime - Combined Datasets
 fig, axes = plt.subplots(2, 3, figsize=(12, 8))
 plt.rcParams["figure.figsize"] = (6,6)
 sc.pl.draw_graph(combined_adata, color=['dpt_pseudotime'], ncols=3, cmap='viridis', size=12, ax=axes[0,0], show=False)
@@ -785,24 +588,10 @@ sc.pl.draw_graph(combined_adata, color=['TMPRSS2'], ncols=3, cmap='viridis', siz
 sc.pl.draw_graph(combined_adata, color=['TMPRSS4'], ncols=3, cmap='viridis', size=12, ax=axes[1,2], show=False)
 # Adjust title
 plt.suptitle("Gene Expression in Pseudotime - Combined Datasets", y=1.0, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
 
-fig, axes = plt.subplots(2, 3, figsize=(12, 8))
-plt.rcParams["figure.figsize"] = (6,6)
-sc.pl.draw_graph(combined_adata, color=['dpt_pseudotime'], ncols=3, cmap='viridis', size=12, ax=axes[0,0], show=False)
-sc.pl.draw_graph(combined_adata, color=['ACE2'], ncols=3, cmap='viridis', size=12, ax=axes[0,1], show=False)
-sc.pl.draw_graph(combined_adata, color=['ENO2'], ncols=3, cmap='viridis', size=12, ax=axes[0,2], show=False)
-sc.pl.draw_graph(combined_adata, color=['CTSL'], ncols=3, cmap='viridis', size=12, ax=axes[1,0], show=False)
-sc.pl.draw_graph(combined_adata, color=['TMPRSS2'], ncols=3, cmap='viridis', size=12, ax=axes[1,1], show=False)
-sc.pl.draw_graph(combined_adata, color=['TMPRSS4'], ncols=3, cmap='viridis', size=12, ax=axes[1,2], show=False)
-# Adjust title
-plt.suptitle("Gene Expression in Pseudotime - Combined Datasets", y=1.0, fontsize=14, fontweight='bold')
-
-plt.tight_layout()
-plt.show()
-
+# Gene Expression in Pseudotime - Combined Datasets
 fig, axes = plt.subplots(2, 2, figsize=(10, 8))
 plt.rcParams["figure.figsize"] = (6,6)
 sc.pl.draw_graph(combined_adata, color=['ACE2'], ncols=3, cmap='viridis', size=12, ax=axes[0,0], show=False)
@@ -811,42 +600,13 @@ sc.pl.draw_graph(combined_adata, color=['TMPRSS2'], ncols=3, cmap='viridis', siz
 sc.pl.draw_graph(combined_adata, color=['TMPRSS4'], ncols=3, cmap='viridis', size=12, ax=axes[1,1], show=False)
 # Adjust title
 plt.suptitle("Gene Expression in Pseudotime - Combined Datasets", y=1.0, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
 
-plt.rcParams["figure.figsize"] = (6,6)
-sc.pl.draw_graph(combined_adata, color=['dpt_pseudotime'], cmap='viridis', size=12)
-
-plt.rcParams["figure.figsize"] = (6,6)
-sc.pl.draw_graph(combined_adata, color=['dpt_pseudotime'], cmap='viridis', size=12)
-
+# ACE2 alone pseudotime visualization
 plt.rcParams["figure.figsize"] = (6,6)
 sc.pl.draw_graph(combined_adata, color=['ACE2'], cmap='viridis', size=12)
 
-plt.rcParams["figure.figsize"] = (6,6)
-sc.pl.draw_graph(combined_adata, color=['ACE2'], cmap='viridis', size=12)
-
+# ENO2 alone pseudotime visualization
 plt.rcParams["figure.figsize"] = (6,6)
 sc.pl.draw_graph(combined_adata, color=['ENO2'], cmap='viridis', size=12)
-
-plt.rcParams["figure.figsize"] = (6,6)
-sc.pl.draw_graph(combined_adata, color=['ENO2'], cmap='viridis', size=12)
-
-plt.rcParams["figure.figsize"] = (6,6)
-sc.pl.draw_graph(combined_adata, color=['CTSL'], cmap='viridis', size=12)
-
-plt.rcParams["figure.figsize"] = (6,6)
-sc.pl.draw_graph(combined_adata, color=['CTSL'], cmap='viridis', size=12)
-
-plt.rcParams["figure.figsize"] = (6,6)
-sc.pl.draw_graph(combined_adata, color=['TMPRSS2'], cmap='viridis', size=12)
-
-plt.rcParams["figure.figsize"] = (6,6)
-sc.pl.draw_graph(combined_adata, color=['TMPRSS2'], cmap='viridis', size=12)
-
-plt.rcParams["figure.figsize"] = (6,6)
-sc.pl.draw_graph(combined_adata, color=['TMPRSS4'], cmap='viridis', size=12)
-
-plt.rcParams["figure.figsize"] = (6,6)
-sc.pl.draw_graph(combined_adata, color=['TMPRSS4'], cmap='viridis', size=12)
