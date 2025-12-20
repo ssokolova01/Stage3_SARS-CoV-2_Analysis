@@ -797,7 +797,6 @@ sc.tl.draw_graph(dpi3_adata)
 
 # Create a figure with 2x2 subplots
 fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-
 # Plot visualization
 # Mock
 plt.rcParams["figure.figsize"] = (8,8)
@@ -811,29 +810,6 @@ sc.pl.draw_graph(dpi2_adata, color='cell_type', legend_loc='on data', size = 12,
 # Day_3
 plt.rcParams["figure.figsize"] = (8,8)
 sc.pl.draw_graph(dpi3_adata, color='cell_type', legend_loc='on data', size = 12, title = "Day3", legend_fontsize=8, ax=axes[1,1], show=False)
-
-plt.tight_layout()
-plt.show()
-
-# Graph plots
-
-# Create a figure with 2x2 subplots
-fig, axes = plt.subplots(2, 2, figsize=(16, 10))
-
-# Plot visualization
-# Mock
-plt.rcParams["figure.figsize"] = (8,8)
-sc.pl.draw_graph(mock_adata, color='cell_type', size = 12, legend_fontsize=8, title = "Mock", ax=axes[0,0], show=False)
-# Day_1
-plt.rcParams["figure.figsize"] = (8,8)
-sc.pl.draw_graph(dpi1_adata, color='cell_type', size = 12, legend_fontsize=8, title = "Day 1", ax=axes[0,1], show=False)
-# Day_2
-plt.rcParams["figure.figsize"] = (8,8)
-sc.pl.draw_graph(dpi2_adata, color='cell_type', size = 12, legend_fontsize=8, title = "Day 2", ax=axes[1,0], show=False)
-# Day_3
-plt.rcParams["figure.figsize"] = (8,8)
-sc.pl.draw_graph(dpi3_adata, color='cell_type', size = 12, legend_fontsize=8, title = "Day 3", ax=axes[1,1], show=False)
-
 plt.tight_layout()
 plt.show()
 
@@ -847,7 +823,6 @@ sc.tl.paga(dpi3_adata, groups='cell_type')
 
 # Create a figure with 2x2 subplots
 fig, axes = plt.subplots(2, 2, figsize=(18, 8))
-
 # Plot visualization
 # Mock
 sc.pl.paga(mock_adata, color=['cell_type'], fontsize=8, node_size_scale=3, title = "Mock", ax=axes[0,0], show=False)
@@ -857,32 +832,10 @@ sc.pl.paga(dpi1_adata, color=['cell_type'], fontsize=8, node_size_scale=3, title
 sc.pl.paga(dpi2_adata, color=['cell_type'], fontsize=8, node_size_scale=3, title = "Day 2", ax=axes[1,0], show=False)
 # Day_3
 sc.pl.paga(dpi3_adata, color=['cell_type'], fontsize=8, node_size_scale=3, title = "Day 3", ax=axes[1,1], show=False)
-
 # Adjust title
 plt.suptitle("PAGA graph", y=1.0, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
-
-# Plot the PAGA graphs
-# Mock
-plt.rcParams["figure.figsize"] = (10, 8)
-sc.pl.paga(mock_adata, color='cell_type', fontsize=8, node_size_scale=5, title="PAGA - Mock")
-
-# Plot the PAGA graphs
-# Day_1
-plt.rcParams["figure.figsize"] = (10, 8)
-sc.pl.paga(dpi1_adata, color='cell_type', fontsize=8, node_size_scale=5, title="PAGA - Day 1")
-
-# Plot the PAGA graphs
-# Day_2
-plt.rcParams["figure.figsize"] = (10, 8)
-sc.pl.paga(dpi2_adata, color='cell_type', fontsize=8, node_size_scale=5, title="PAGA - Day 2")
-
-# Plot the PAGA graphs
-# Day_3
-plt.rcParams["figure.figsize"] = (10, 8)
-sc.pl.paga(dpi3_adata, color='cell_type', fontsize=8, node_size_scale=5, title="PAGA - Day 3")
 
 # Initialize graph layout using PAGA structure as starting point
 sc.tl.draw_graph(mock_adata, init_pos='paga')
@@ -894,31 +847,12 @@ sc.tl.draw_graph(dpi3_adata, init_pos='paga')
 
 # Create a figure with 2x2 subplots
 fig, axes = plt.subplots(2, 2, figsize=(16, 10))
-
-sc.pl.draw_graph(mock_adata, color='cell_type', ax=axes[0,0], show=False)
-sc.pl.draw_graph(dpi1_adata, color='cell_type', ax=axes[0,1], show=False)
-sc.pl.draw_graph(dpi2_adata, color='cell_type', ax=axes[1,0], show=False)
-sc.pl.draw_graph(dpi3_adata, color='cell_type', ax=axes[1,1], show=False)
-
-# Adjust title
-plt.suptitle("draw_graph", y=1.0, fontsize=14, fontweight='bold')
-
-plt.tight_layout()
-plt.show()
-
-# Visualization
-
-# Create a figure with 2x2 subplots
-fig, axes = plt.subplots(2, 2, figsize=(16, 10))
-
 sc.pl.draw_graph(mock_adata, color='cell_type', legend_fontsize = 7, legend_loc='on data', size=12, ax=axes[0,0], show=False)
 sc.pl.draw_graph(dpi1_adata, color='cell_type', legend_fontsize = 7, legend_loc='on data', size=12, ax=axes[0,1], show=False)
 sc.pl.draw_graph(dpi2_adata, color='cell_type', legend_fontsize = 7, legend_loc='on data', size=12, ax=axes[1,0], show=False)
 sc.pl.draw_graph(dpi3_adata, color='cell_type', legend_fontsize = 7, legend_loc='on data', size=12, ax=axes[1,1], show=False)
-
 # Adjust title
 plt.suptitle("draw_graph", y=1.0, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
 
@@ -937,7 +871,7 @@ sc.pl.paga_compare(dpi2_adata, threshold=0.03, frameon=True, edges=True, title =
 plt.rcParams["figure.figsize"] = (7,5)
 sc.pl.paga_compare(dpi3_adata, threshold=0.03, frameon=True, edges=True, title = "PAGA/UMAP comparison - Day 3", node_size_scale=5, size = 12, fontsize=6, legend_fontsize = 7)
 
-import numpy as np
+# Root definition
 mock_adata.uns['iroot'] = np.flatnonzero(mock_adata.obs['leiden_res0_5'] == '0')[0]
 sc.tl.dpt(mock_adata)
 dpi1_adata.uns['iroot'] = np.flatnonzero(dpi1_adata.obs['leiden_res0_5'] == '0')[0]
@@ -952,16 +886,13 @@ plt.rcParams["figure.figsize"] = (10,8)
 sc.pl.draw_graph(mock_adata, color=['dpt_pseudotime', 'cell_type'], title = "dpt_pseudotime", legend_fontsize = 14, size = 12, show=False)
 # Adjust title
 plt.suptitle("Pseudotime on UMAP/draw_graph - Mock", y=0.98, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
-
 # Pseudotime on UMAP/fraw_graph - Mock
 plt.rcParams["figure.figsize"] = (10,8)
 sc.pl.draw_graph(mock_adata, color=['dpt_pseudotime', 'cell_type'], title = "dpt_pseudotime", legend_loc='on data', legend_fontsize = 8, size = 14, show=False)
 # Adjust title
 plt.suptitle("Pseudotime on UMAP/draw_graph - Mock", y=0.98, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
 
@@ -970,16 +901,13 @@ plt.rcParams["figure.figsize"] = (10,8)
 sc.pl.draw_graph(dpi1_adata, color=['dpt_pseudotime', 'cell_type'], title = "dpt_pseudotime", legend_fontsize = 14, size = 12, show=False)
 # Adjust title
 plt.suptitle("Pseudotime on UMAP/draw_graph - Day 1", y=0.98, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
-
 # Pseudotime on UMAP/fraw_graph - Day 1
 plt.rcParams["figure.figsize"] = (10,8)
 sc.pl.draw_graph(dpi1_adata, color=['dpt_pseudotime', 'cell_type'], title = "dpt_pseudotime", legend_loc='on data', legend_fontsize = 8, size = 14, show=False)
 # Adjust title
 plt.suptitle("Pseudotime on UMAP/draw_graph - Day 1", y=0.98, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
 
@@ -988,16 +916,13 @@ plt.rcParams["figure.figsize"] = (10,8)
 sc.pl.draw_graph(dpi2_adata, color=['dpt_pseudotime', 'cell_type'], title = "dpt_pseudotime", legend_fontsize = 14, size = 12, show=False)
 # Adjust title
 plt.suptitle("Pseudotime on UMAP/draw_graph - Day 2", y=0.98, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
-
 # Pseudotime on UMAP/fraw_graph - Day 2
 plt.rcParams["figure.figsize"] = (10,8)
 sc.pl.draw_graph(dpi2_adata, color=['dpt_pseudotime', 'cell_type'], title = "dpt_pseudotime", legend_loc='on data', legend_fontsize = 8, size = 14, show=False)
 # Adjust title
 plt.suptitle("Pseudotime on UMAP/draw_graph - Day 2", y=0.98, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
 
@@ -1006,16 +931,13 @@ plt.rcParams["figure.figsize"] = (10,8)
 sc.pl.draw_graph(dpi3_adata, color=['dpt_pseudotime', 'cell_type'], title = "dpt_pseudotime", legend_fontsize = 14, size = 12, show=False)
 # Adjust title
 plt.suptitle("Pseudotime on UMAP/draw_graph - Day 3", y=0.98, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
-
 # Pseudotime on UMAP/fraw_graph - Day 3
 plt.rcParams["figure.figsize"] = (10,8)
 sc.pl.draw_graph(dpi3_adata, color=['dpt_pseudotime', 'cell_type'], title = "dpt_pseudotime", legend_loc='on data', legend_fontsize = 8, size = 14, show=False)
 # Adjust title
 plt.suptitle("Pseudotime on UMAP/draw_graph - Day 3", y=0.98, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
 
@@ -1023,130 +945,107 @@ plt.show()
 
 # Create a figure with 2x2 subplots
 fig, axes = plt.subplots(2, 2, figsize=(16, 10))
-
 sc.pl.draw_graph(mock_adata, color=['dpt_pseudotime'], ax=axes[0,0], show=False)
 sc.pl.draw_graph(dpi1_adata, color=['dpt_pseudotime'], ax=axes[0,1], show=False)
 sc.pl.draw_graph(dpi2_adata, color=['dpt_pseudotime'], ax=axes[1,0], show=False)
 sc.pl.draw_graph(dpi3_adata, color=['dpt_pseudotime'], ax=axes[1,1], show=False)
-
 # Adjust title
 plt.suptitle("Pseudotime - All Timepoints", y=1.0, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
 
 # Gene expression along pseudotime - Mock
 fig, axes = plt.subplots(1, 3, figsize=(18, 6))
-
 # Row 1: Viral entry
 sc.pl.draw_graph(mock_adata, color='dpt_pseudotime', cmap='viridis', ax=axes[0], show=False, title='Pseudotime')
 sc.pl.draw_graph(mock_adata, color='ACE2', cmap='viridis', ax=axes[1], show=False, title='ACE2')
 sc.pl.draw_graph(mock_adata, color='ENO2', cmap='viridis', ax=axes[2], show=False, title='ENO2')
-
 plt.suptitle('Gene expression along pseudotime - Mock', fontsize=16, y=0.995)
 plt.tight_layout()
 plt.show()
 
 # Gene expression along pseudotime - Mock
 fig, axes = plt.subplots(2, 3, figsize=(18, 12))
-
 # Row 1: Viral entry
 sc.pl.draw_graph(mock_adata, color='dpt_pseudotime', cmap='viridis', ax=axes[0,0], show=False, title='Pseudotime')
 sc.pl.draw_graph(mock_adata, color='ACE2', cmap='viridis', ax=axes[0,1], show=False, title='ACE2')
 sc.pl.draw_graph(mock_adata, color='ENO2', cmap='viridis', ax=axes[0,2], show=False, title='ENO2')
-
 # Row 2: Other key genes
 sc.pl.draw_graph(mock_adata, color='CTSL', cmap='viridis', ax=axes[1,0], show=False, title='CTSL')
 sc.pl.draw_graph(mock_adata, color='TMPRSS2', cmap='viridis', ax=axes[1,1], show=False, title='TMPRSS2')
 sc.pl.draw_graph(mock_adata, color='TMPRSS4', cmap='viridis', ax=axes[1,2], show=False, title='TMPRSS4')
-
 plt.suptitle('Gene expression along pseudotime - Mock', fontsize=16, y=0.995)
 plt.tight_layout()
 plt.show()
 
 # Gene expression along pseudotime - Day 1
 fig, axes = plt.subplots(1, 3, figsize=(18, 6))
-
 # Row 1: Viral entry
 sc.pl.draw_graph(dpi1_adata, color='dpt_pseudotime', cmap='viridis', ax=axes[0], show=False, title='Pseudotime')
 sc.pl.draw_graph(dpi1_adata, color='ACE2', cmap='viridis', ax=axes[1], show=False, title='ACE2')
 sc.pl.draw_graph(dpi1_adata, color='ENO2', cmap='viridis', ax=axes[2], show=False, title='ENO2')
-
 plt.suptitle('Gene expression along pseudotime - Day 1', fontsize=16, y=0.995)
 plt.tight_layout()
 plt.show()
 
 # Gene expression along pseudotime - Day 1
 fig, axes = plt.subplots(2, 3, figsize=(18, 12))
-
 # Row 1: Viral entry
 sc.pl.draw_graph(dpi1_adata, color='dpt_pseudotime', cmap='viridis', ax=axes[0,0], show=False, title='Pseudotime')
 sc.pl.draw_graph(dpi1_adata, color='ACE2', cmap='viridis', ax=axes[0,1], show=False, title='ACE2')
 sc.pl.draw_graph(dpi1_adata, color='ENO2', cmap='viridis', ax=axes[0,2], show=False, title='ENO2')
-
 # Row 2: Other key genes
 sc.pl.draw_graph(dpi1_adata, color='CTSL', cmap='viridis', ax=axes[1,0], show=False, title='CTSL')
 sc.pl.draw_graph(dpi1_adata, color='TMPRSS2', cmap='viridis', ax=axes[1,1], show=False, title='TMPRSS2')
 sc.pl.draw_graph(dpi1_adata, color='TMPRSS4', cmap='viridis', ax=axes[1,2], show=False, title='TMPRSS4')
-
 plt.suptitle('Gene expression along pseudotime - Day 1', fontsize=16, y=0.995)
 plt.tight_layout()
 plt.show()
 
 # Gene expression along pseudotime - Day 2
 fig, axes = plt.subplots(1, 3, figsize=(18, 6))
-
 # Row 1: Viral entry
 sc.pl.draw_graph(dpi2_adata, color='dpt_pseudotime', cmap='viridis', ax=axes[0], show=False, title='Pseudotime')
 sc.pl.draw_graph(dpi2_adata, color='ACE2', cmap='viridis', ax=axes[1], show=False, title='ACE2')
 sc.pl.draw_graph(dpi2_adata, color='ENO2', cmap='viridis', ax=axes[2], show=False, title='ENO2')
-
 plt.suptitle('Gene expression along pseudotime - Day 2', fontsize=16, y=0.995)
 plt.tight_layout()
 plt.show()
 
 # Gene expression along pseudotime - Day 2
 fig, axes = plt.subplots(2, 3, figsize=(18, 12))
-
 # Row 1: Viral entry
 sc.pl.draw_graph(dpi2_adata, color='dpt_pseudotime', cmap='viridis', ax=axes[0,0], show=False, title='Pseudotime')
 sc.pl.draw_graph(dpi2_adata, color='ACE2', cmap='viridis', ax=axes[0,1], show=False, title='ACE2')
 sc.pl.draw_graph(dpi2_adata, color='ENO2', cmap='viridis', ax=axes[0,2], show=False, title='ENO2')
-
 # Row 2: Other key genes
 sc.pl.draw_graph(dpi2_adata, color='CTSL', cmap='viridis', ax=axes[1,0], show=False, title='CTSL')
 sc.pl.draw_graph(dpi2_adata, color='TMPRSS2', cmap='viridis', ax=axes[1,1], show=False, title='TMPRSS2')
 sc.pl.draw_graph(dpi2_adata, color='TMPRSS4', cmap='viridis', ax=axes[1,2], show=False, title='TMPRSS4')
-
 plt.suptitle('Gene expression along pseudotime - Day 2', fontsize=16, y=0.995)
 plt.tight_layout()
 plt.show()
 
 # Gene expression along pseudotime - Day 3
 fig, axes = plt.subplots(1, 3, figsize=(18, 6))
-
 # Row 1: Viral entry
 sc.pl.draw_graph(dpi3_adata, color='dpt_pseudotime', cmap='viridis', ax=axes[0], show=False, title='Pseudotime')
 sc.pl.draw_graph(dpi3_adata, color='ACE2', cmap='viridis', ax=axes[1], show=False, title='ACE2')
 sc.pl.draw_graph(dpi3_adata, color='ENO2', cmap='viridis', ax=axes[2], show=False, title='ENO2')
-
 plt.suptitle('Gene expression along pseudotime - Day 3', fontsize=16, y=0.995)
 plt.tight_layout()
 plt.show()
 
 # Gene expression along pseudotime - Day 3
 fig, axes = plt.subplots(2, 3, figsize=(18, 12))
-
 # Row 1: Viral entry
 sc.pl.draw_graph(dpi3_adata, color='dpt_pseudotime', cmap='viridis', ax=axes[0,0], show=False, title='Pseudotime')
 sc.pl.draw_graph(dpi3_adata, color='ACE2', cmap='viridis', ax=axes[0,1], show=False, title='ACE2')
 sc.pl.draw_graph(dpi3_adata, color='ENO2', cmap='viridis', ax=axes[0,2], show=False, title='ENO2')
-
 # Row 2: Other key genes
 sc.pl.draw_graph(dpi3_adata, color='CTSL', cmap='viridis', ax=axes[1,0], show=False, title='CTSL')
 sc.pl.draw_graph(dpi3_adata, color='TMPRSS2', cmap='viridis', ax=axes[1,1], show=False, title='TMPRSS2')
 sc.pl.draw_graph(dpi3_adata, color='TMPRSS4', cmap='viridis', ax=axes[1,2], show=False, title='TMPRSS4')
-
 plt.suptitle('Gene expression along pseudotime - Day 3', fontsize=16, y=0.995)
 plt.tight_layout()
 plt.show()
@@ -1154,19 +1053,15 @@ plt.show()
 # Gene expression along pseudotime - Day 3
 plt.rcParams["figure.figsize"] = (5,5)
 sc.pl.draw_graph(dpi3_adata, color=['ACE2'], cmap='viridis', show=False, title='Pseudotime Gene Expression ACE2 - Day 3')
-
-
 plt.tight_layout()
 plt.show()
 
 # Gene expression along pseudotime - Day 3
 fig, axes = plt.subplots(2, 2, figsize=(10, 8))
-
 sc.pl.draw_graph(mock_adata, color='ACE2', cmap='viridis', ax=axes[0,0], show=False, title='ACE2_Mock')
 sc.pl.draw_graph(dpi1_adata, color='ACE2', cmap='viridis', ax=axes[0,1], show=False, title='ACE2_Day 1')
 sc.pl.draw_graph(dpi2_adata, color='ACE2', cmap='viridis', ax=axes[1,0], show=False, title='ACE2_Day 2')
 sc.pl.draw_graph(dpi3_adata, color='ACE2', cmap='viridis', ax=axes[1,1], show=False, title='ACE2_Day 3')
-
 plt.suptitle('Gene expression along pseudotime - ACE2', fontsize=16, y=0.995)
 plt.tight_layout()
 plt.show()
