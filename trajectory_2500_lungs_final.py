@@ -7,6 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/12km0m-qpQc9m9zemHaFVSDljdJgTyyGD
 """
 
+#Packages installation
 !pip install scanpy
 !pip install anndata
 !pip3 install igraph
@@ -22,29 +23,33 @@ import anndata as ad
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Create directories for datasets
 !mkdir -p GSM5082289_Mock
 !mkdir -p GSM5082290_1dpi
 !mkdir -p GSM5082291_2dpi
 !mkdir -p GSM5082292_3dpi
 
+# Upload Mock dataset
 !wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5082nnn/GSM5082289/suppl/GSM5082289_mock_barcodes.tsv.gz -O GSM5082289_Mock/barcodes.tsv.gz
 !wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5082nnn/GSM5082289/suppl/GSM5082289_mock_features.tsv.gz -O GSM5082289_Mock/features.tsv.gz
 !wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5082nnn/GSM5082289/suppl/GSM5082289_mock_matrix.mtx.gz -O GSM5082289_Mock/matrix.mtx.gz
 
+# Upload Day 1 dataset
 !wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5082nnn/GSM5082290/suppl/GSM5082290_1dpi_barcodes.tsv.gz -O GSM5082290_1dpi/barcodes.tsv.gz
 !wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5082nnn/GSM5082290/suppl/GSM5082290_1dpi_features.tsv.gz -O GSM5082290_1dpi/features.tsv.gz
 !wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5082nnn/GSM5082290/suppl/GSM5082290_1dpi_matrix.mtx.gz -O GSM5082290_1dpi/matrix.mtx.gz
 
+# Upload Day 2 dataset
 !wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5082nnn/GSM5082291/suppl/GSM5082291_2dpi_barcodes.tsv.gz -O GSM5082291_2dpi/barcodes.tsv.gz
 !wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5082nnn/GSM5082291/suppl/GSM5082291_2dpi_features.tsv.gz -O GSM5082291_2dpi/features.tsv.gz
 !wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5082nnn/GSM5082291/suppl/GSM5082291_2dpi_matrix.mtx.gz -O GSM5082291_2dpi/matrix.mtx.gz
 
+# Upload Day 3 dataset
 !wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5082nnn/GSM5082292/suppl/GSM5082292_3dpi_barcodes.tsv.gz -O GSM5082292_3dpi/barcodes.tsv.gz
 !wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5082nnn/GSM5082292/suppl/GSM5082292_3dpi_features.tsv.gz -O GSM5082292_3dpi/features.tsv.gz
 !wget https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM5082nnn/GSM5082292/suppl/GSM5082292_3dpi_matrix.mtx.gz -O GSM5082292_3dpi/matrix.mtx.gz
 
-import scanpy as sc
-
+# Save datasets to variables 
 mock_adata = sc.read_10x_mtx('/content/GSM5082289_Mock/')
 dpi1_adata = sc.read_10x_mtx('/content/GSM5082290_1dpi/')
 dpi2_adata = sc.read_10x_mtx('/content/GSM5082291_2dpi/')
@@ -92,27 +97,33 @@ sc.pp.calculate_qc_metrics(
     dpi3_adata, qc_vars=["MT", 'RIBO', 'HB'], inplace=True, log1p=True
 )
 
+# Mock dataset filtering
 sc.pp.filter_cells(mock_adata, min_genes=200)
 sc.pp.filter_genes(mock_adata, min_cells=3)
 mock_adata = mock_adata[mock_adata.obs['pct_counts_MT'] < 10, :]
 
+# Day 1 dataset filtering
 sc.pp.filter_cells(dpi1_adata, min_genes=200)
 sc.pp.filter_genes(dpi1_adata, min_cells=3)
 dpi1_adata = dpi1_adata[dpi1_adata.obs['pct_counts_MT'] < 10, :]
 
+# Day 2 dataset filtering
 sc.pp.filter_cells(dpi2_adata, min_genes=200)
 sc.pp.filter_genes(dpi2_adata, min_cells=3)
 dpi2_adata = dpi2_adata[dpi2_adata.obs['pct_counts_MT'] < 10, :]
 
+# Day 3 dataset filtering
 sc.pp.filter_cells(dpi3_adata, min_genes=200)
 sc.pp.filter_genes(dpi3_adata, min_cells=3)
 dpi3_adata = dpi3_adata[dpi3_adata.obs['pct_counts_MT'] < 10, :]
 
+# Check the doublets
 sc.pp.scrublet(mock_adata)
 sc.pp.scrublet(dpi1_adata)
 sc.pp.scrublet(dpi2_adata)
 sc.pp.scrublet(dpi3_adata)
 
+# Delete doublets
 mock_adata = mock_adata[~mock_adata.obs['predicted_doublet'], :]
 dpi1_adata = dpi1_adata[~dpi1_adata.obs['predicted_doublet'], :]
 dpi2_adata = dpi2_adata[~dpi2_adata.obs['predicted_doublet'], :]
