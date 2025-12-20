@@ -20,7 +20,7 @@ Original file is located at
 import scanpy as sc
 import anndata as ad
 import numpy as np
-#import scvelo as scv
+import matplotlib.pyplot as plt
 
 !mkdir -p GSM5082289_Mock
 !mkdir -p GSM5082290_1dpi
@@ -91,18 +91,6 @@ sc.pp.calculate_qc_metrics(
 sc.pp.calculate_qc_metrics(
     dpi3_adata, qc_vars=["MT", 'RIBO', 'HB'], inplace=True, log1p=True
 )
-
-import matplotlib.pyplot as plt
-
-plt.rcParams["figure.figsize"] = (5,4)  # Adjust figure size
-plt.rcParams["axes.grid"] = True  # Add grid to plots
-plt.rcParams["axes.edgecolor"] = "black" # Set plot border color
-plt.rcParams["axes.linewidth"] = 1.5 # Set plot border width
-plt.rcParams["axes.facecolor"] = "white" # Set background color
-plt.rcParams["axes.labelcolor"] = "black" # Set label color
-plt.rcParams["xtick.color"] = "black" # Set x-axis tick color
-plt.rcParams["ytick.color"] = "black" # Set y-axis tick color
-plt.rcParams["text.color"] = "black" # Set text color
 
 sc.pp.filter_cells(mock_adata, min_genes=200)
 sc.pp.filter_genes(mock_adata, min_cells=3)
@@ -196,11 +184,8 @@ sc.pl.pca_variance_ratio(dpi2_adata, n_pcs=10, log=False)
 sc.tl.pca(dpi3_adata)
 sc.pl.pca_variance_ratio(dpi3_adata, n_pcs=10, log=False)
 
-import matplotlib.pyplot as plt
-# Create a figure with 2x2 subplots
+# Create a figure with subplots
 fig, axes = plt.subplots(2, 2, figsize=(10, 8))
-
-
 # Overview of the total number of genes in cells after PCA
 # Mock
 sc.pl.pca(mock_adata, color = ['n_genes_by_counts'], cmap="coolwarm", title="mock", ax=axes[0,0], show=False)
@@ -210,39 +195,6 @@ sc.pl.pca(dpi1_adata, color = ['n_genes_by_counts'], cmap="coolwarm", title="dpi
 sc.pl.pca(dpi2_adata,color = ['n_genes_by_counts'], cmap="coolwarm", title="dpi2", ax=axes[1,0], show=False)
 # Day_3
 sc.pl.pca(dpi3_adata, color = ['n_genes_by_counts'], cmap="coolwarm", title="dpi3", ax=axes[1,1], show=False)
-
-plt.tight_layout()
-plt.show()
-
-# Create a figure with 2x2 subplots
-fig, axes = plt.subplots(2, 2, figsize=(10, 8))
-
-# Check ENO2 gene (PCA)
-# Mock
-sc.pl.pca(mock_adata, color="ENO2", cmap="coolwarm", title="ENO2_mock", ax=axes[0,0], show=False)
-# Day_1
-sc.pl.pca(dpi1_adata, color="ENO2", cmap="coolwarm", title="ENO2_dpi1", ax=axes[0,1], show=False)
-# Day_2
-sc.pl.pca(dpi2_adata, color="ENO2", cmap="coolwarm", title="ENO2_dpi2", ax=axes[1,0], show=False)
-# Day_3
-sc.pl.pca(dpi3_adata, color="ENO2", cmap="coolwarm", title="ENO2_dpi3", ax=axes[1,1], show=False)
-
-plt.tight_layout()
-plt.show()
-
-# Create a figure with 2x2 subplots
-fig, axes = plt.subplots(2, 2, figsize=(10, 8))
-
-# Check ACE2 gene (PCA)
-# Mock
-sc.pl.pca(mock_adata, color="ACE2", cmap="coolwarm", title="ACE2_mock", ax=axes[0,0], show=False)
-# Day_1
-sc.pl.pca(dpi1_adata, color="ACE2", cmap="coolwarm", title="ACE2_dpi1", ax=axes[0,1], show=False)
-# Day_2
-sc.pl.pca(dpi2_adata, color="ACE2", cmap="coolwarm", title="ACE2_dpi2", ax=axes[1,0], show=False)
-# Day_3
-sc.pl.pca(dpi3_adata, color="ACE2", cmap="coolwarm", title="ACE2_dpi3", ax=axes[1,1], show=False)
-
 plt.tight_layout()
 plt.show()
 
@@ -277,38 +229,6 @@ sc.pl.umap(dpi1_adata, color = ['n_genes_by_counts'], cmap='coolwarm', vmax='p95
 sc.pl.umap(dpi2_adata,color = ['n_genes_by_counts'], cmap='coolwarm', vmax='p95', size=8, title="dpi2", ax=axes[1,0], show=False)
 # Day_3
 sc.pl.umap(dpi3_adata, color = ['n_genes_by_counts'], cmap='coolwarm', vmax='p95', size=8, title="dpi3", ax=axes[1,1], show=False)
-
-plt.tight_layout()
-plt.show()
-
-# Create a figure with 2x2 subplots
-fig, axes = plt.subplots(2, 2, figsize=(10, 8))
-
-# Check ENO2 gene (UMAP)
-# Mock
-sc.pl.umap(mock_adata, color=["ENO2"], cmap='coolwarm', vmax='p95', size=8, title="ENO2_mock", ax=axes[0,0], show=False)
-# Day_1
-sc.pl.umap(dpi1_adata, color=["ENO2"], cmap='coolwarm', vmax='p95', size=8, title="ENO2_dpi1", ax=axes[0,1], show=False)
-# Day_2
-sc.pl.umap(dpi2_adata, color=["ENO2"], cmap='coolwarm', vmax='p95', size=8, title="ENO2_dpi2", ax=axes[1,0], show=False)
-# Day_3
-sc.pl.umap(dpi3_adata, color=["ENO2"], cmap='coolwarm', vmax='p95', size=8, title="ENO2_dpi3", ax=axes[1,1], show=False)
-
-plt.tight_layout()
-plt.show()
-
-# Create a figure with 2x2 subplots
-fig, axes = plt.subplots(2, 2, figsize=(10, 8))
-
-# Check ACE2 gene (UMAP)
-# Mock
-sc.pl.umap(mock_adata, color=["ACE2"], cmap='coolwarm', vmax='p95', size=8, title="ACE2_mock", ax=axes[0,0], show=False)
-# Day_1
-sc.pl.umap(dpi1_adata, color=["ACE2"], cmap='coolwarm', vmax='p95', size=8, title="ACE2_dpi1", ax=axes[0,1], show=False)
-# Day_2
-sc.pl.umap(dpi2_adata, color=["ACE2"], cmap='coolwarm', vmax='p95', size=8, title="ACE2_dpi2", ax=axes[1,0], show=False)
-# Day_3
-sc.pl.umap(dpi3_adata, color=["ACE2"], cmap='coolwarm', vmax='p95', size=8, title="ACE2_dpi3", ax=axes[1,1], show=False)
 
 plt.tight_layout()
 plt.show()
@@ -424,28 +344,6 @@ display(top_cell_type_per_group_dpi2.to_dict())
 top_cell_type_per_group_dpi3 = dpi3_adata_gene_rank.groupby('group')['name'].apply(lambda x: x.head(1))
 display(top_cell_type_per_group_dpi3.to_dict())
 
-# Create separate plots of Ciliated cells and leiden_res0_5 for each batch - after cell annotation
-fig, axes = plt.subplots(4, 2, figsize=(10, 18))
-
-# Mock sample
-sc.pl.umap(score_mock, color="Ciliated cells", cmap='coolwarm', vmax='p95', size=8, title="Mock - Ciliated cells score", ax=axes[0,0], show=False)
-sc.pl.umap(score_mock, color="leiden_res0_5", size=8, title="Mock - Cluster assignments", ax=axes[0,1], show=False)
-
-# Day_1 sample
-sc.pl.umap(score_dpi1, color="Ciliated cells", cmap='coolwarm', vmax='p95', size=8, title="Day 1 - Ciliated cells score", ax=axes[1,0], show=False)
-sc.pl.umap(score_dpi1, color="leiden_res0_5", size=8, title="Day 1 - Cluster assignments", ax=axes[1,1], show=False)
-
-# Day_2 sample
-sc.pl.umap(score_dpi2, color="Ciliated cells", cmap='coolwarm', vmax='p95', size=8, title="Day 2 - Ciliated cells score", ax=axes[2,0], show=False)
-sc.pl.umap(score_dpi2, color="leiden_res0_5", size=8, title="Day 2 - Cluster assignments", ax=axes[2,1], show=False)
-
-# Day_3 sample
-sc.pl.umap(score_dpi3, color="Ciliated cells", cmap='coolwarm', vmax='p95', size=8, title="Day 3 - Ciliated cells score", ax=axes[3,0], show=False)
-sc.pl.umap(score_dpi3, color="leiden_res0_5", size=8, title="Day 3 - Cluster assignments", ax=axes[3,1], show=False)
-
-plt.tight_layout()
-plt.show()
-
 # Map each cluster to its top cell type annotation (filtering positive scores) - Mock
 dict_ann_mock = (mock_adata_gene_rank[(mock_adata_gene_rank["stat"] > 0)].groupby("group").head(1).set_index("group")["name"].to_dict())
 dict_ann_mock
@@ -464,91 +362,44 @@ dict_ann_dpi3
 
 # ANNOTATED CELL CLUSTERS PLOT - MOCK - 3A PLOT
 
-# Create a figure with 2x2 subplots
+# Create a figure with subplots
 fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
 # Annotate clusters with cell type labels using the annotation dictionary
 mock_adata.obs["cell_type"] = mock_adata.obs["leiden_res0_5"].map(dict_ann_mock).astype('category')
 # Visualization (legend out and on clusters)
 sc.pl.umap(mock_adata, color='cell_type', ax=axes[0], show=False)
 sc.pl.umap(mock_adata, color='cell_type', legend_loc='on data', legend_fontsize=7, ax=axes[1], show=False)
-
 # Adjust title
 plt.suptitle("Annotated Cell Clusters - Mock", y=1.0, fontsize=14, fontweight='bold')
-
-plt.tight_layout()
-plt.show()
-
-# Visualization (legend out and on clusters)
-plt.rcParams["figure.figsize"] = (8,6)
-sc.pl.umap(mock_adata, color='cell_type', show=False)
-# Adjust title
-plt.suptitle("Annotated Cell Clusters - Mock", y=1.0, fontsize=12, fontweight='bold')
-
-plt.tight_layout()
-plt.show()
-
-# Visualization (legend out and on clusters)
-plt.rcParams["figure.figsize"] = (6,6)
-# Adjust title
-sc.pl.umap(mock_adata, color='cell_type', legend_loc='on data', legend_fontsize=7, show=False)
-# Adjust title
-plt.suptitle("Annotated Cell Clusters - Mock", y=1.0, fontsize=12, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
 
 # Verify
-print("\nMock NAs:", mock_adata.obs['cell_type'].isna().sum())
 print("\nMock cell types:")
 print(mock_adata.obs['cell_type'].value_counts())
 
 # ANNOTATED CELL CLUSTERS PLOT - DAY_1 - 3A PLOT
 
-# Create a figure with 2x2 subplots
+# Create a figure with subplots
 fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
 # Annotate clusters with cell type labels using the annotation dictionary
 dpi1_adata.obs["cell_type"] = dpi1_adata.obs["leiden_res0_5"].map(dict_ann_dpi1)
 # Visualization (legend out and on clusters)
 sc.pl.umap(dpi1_adata, color='cell_type', ax=axes[0], show=False)
 sc.pl.umap(dpi1_adata, color='cell_type', legend_loc='on data', legend_fontsize=7, ax=axes[1], show=False)
-
 # Adjust title
 plt.suptitle("Annotated Cell Clusters - Day 1", y=1.0, fontsize=14, fontweight='bold')
-
-plt.tight_layout()
-plt.show()
-
-# Visualization (legend out and on clusters)
-plt.rcParams["figure.figsize"] = (8,6)
-sc.pl.umap(dpi1_adata, color='cell_type', show=False)
-# Adjust title
-plt.suptitle("Annotated Cell Clusters - Day 1", y=1.0, fontsize=12, fontweight='bold')
-
-plt.tight_layout()
-plt.show()
-
-# Visualization (legend out and on clusters)
-plt.rcParams["figure.figsize"] = (6,6)
-# Adjust title
-sc.pl.umap(dpi1_adata, color='cell_type', legend_loc='on data', legend_fontsize=7, show=False)
-# Adjust title
-plt.suptitle("Annotated Cell Clusters - Day 1", y=1.0, fontsize=12, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
 
 # Verify
-print("\nDay 1 NAs:", dpi1_adata.obs['cell_type'].isna().sum())
 print("\nDay 1 cell types:")
 print(dpi1_adata.obs['cell_type'].value_counts())
 
 # ANNOTATED CELL CLUSTERS PLOT - DAY_2 - 3A PLOT
 
-# Create a figure with 2x2 subplots
+# Create a figure with subplots
 fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
 # Annotate clusters with cell type labels using the annotation dictionary
 dpi2_adata.obs["cell_type"] = dpi2_adata.obs["leiden_res0_5"].map(dict_ann_dpi2)
 # Fill any unassigned cell types with 'Unassigned'
@@ -556,40 +407,33 @@ dpi2_adata.obs["cell_type"] = dpi2_adata.obs["leiden_res0_5"].map(dict_ann_dpi2)
 # Visualization (legend out and on clusters)
 sc.pl.umap(dpi2_adata, color='cell_type', ax=axes[0], show=False)
 sc.pl.umap(dpi2_adata, color='cell_type', legend_loc='on data', legend_fontsize=7, ax=axes[1], show=False)
-
 # Adjust title
 plt.suptitle("Annotated Cell Clusters - Day 2 (NA)", y=1.0, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
 
 # ANNOTATED CELL CLUSTERS PLOT - DAY_3 - 3A PLOT
 
-# Create a figure with 2x2 subplots
+# Create a figure with subplots
 fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
 # Annotate clusters with cell type labels using the annotation dictionary
 dpi3_adata.obs["cell_type"] = dpi3_adata.obs["leiden_res0_5"].map(dict_ann_dpi3)
 # Visualization (legend out and on clusters)
 sc.pl.umap(dpi3_adata, color='cell_type', ax=axes[0], show=False)
 sc.pl.umap(dpi3_adata, color='cell_type', legend_loc='on data', legend_fontsize=7, ax=axes[1], show=False)
-
 # Adjust title
 plt.suptitle("Annotated Cell Clusters - Day 3 (NA)", y=1.0, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
 
 # Which cluster is NA? DPI2
 na_cluster_dpi2 = dpi2_adata.obs[dpi2_adata.obs['cell_type'].isna()]['leiden_res0_5'].value_counts()
 print("NA clusters:", na_cluster_dpi2)
-
 # Cluster number
 na_cluster_number_dpi2 = '2'
 
 # Find marker genes for NA cluster - DPI2
 sc.tl.rank_genes_groups(dpi2_adata, groupby='leiden_res0_5', method='wilcoxon')
-
 # Look at top 15 genes
 result = dpi2_adata.uns['rank_genes_groups']
 print(f"Top genes for cluster {na_cluster_number_dpi2}:")
@@ -619,14 +463,11 @@ print(dpi2_adata.obs['cell_type'].value_counts())
 
 # Fix cluster 2 (was NA/Unknown, should be Basal cells)
 dict_ann_dpi2['2'] = 'Basal cells'
-
 # Check the dictionary
 print("Updated dictionary:")
 print(dict_ann_dpi2)
-
 # Now apply it
 dpi2_adata.obs["cell_type"] = dpi2_adata.obs["leiden_res0_5"].map(dict_ann_dpi2)
-
 # Verify
 print("\nDay 2 NAs:", dpi2_adata.obs['cell_type'].isna().sum())
 print("\nDay 2 cell types:")
@@ -634,46 +475,21 @@ print(dpi2_adata.obs['cell_type'].value_counts())
 
 # ANNOTATED CELL CLUSTERS PLOT - DAY_2 - 3A PLOT
 
-# Create a figure with 2x2 subplots
+# Create a figure with subplots
 fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
 # Annotate clusters with cell type labels using the annotation dictionary
 dpi2_adata.obs["cell_type"] = dpi2_adata.obs["leiden_res0_5"].map(dict_ann_dpi2)
-# Fill any unassigned cell types with 'Unassigned'
-#dpi2_adata.obs["cell_type"] = dpi2_adata.obs["leiden_res0_5"].fillna("Unassigned").astype('category')
 # Visualization (legend out and on clusters)
 sc.pl.umap(dpi2_adata, color='cell_type', ax=axes[0], show=False)
 sc.pl.umap(dpi2_adata, color='cell_type', legend_loc='on data', legend_fontsize=7, ax=axes[1], show=False)
-
 # Adjust title
 plt.suptitle("Annotated Cell Clusters - Day 2", y=1.0, fontsize=14, fontweight='bold')
-
-plt.tight_layout()
-plt.show()
-
-# Visualization (legend out and on clusters)
-plt.rcParams["figure.figsize"] = (8,6)
-sc.pl.umap(dpi2_adata, color='cell_type', show=False)
-# Adjust title
-plt.suptitle("Annotated Cell Clusters - Day 2", y=1.0, fontsize=12, fontweight='bold')
-
-plt.tight_layout()
-plt.show()
-
-# Visualization (legend out and on clusters)
-plt.rcParams["figure.figsize"] = (6,6)
-# Adjust title
-sc.pl.umap(dpi2_adata, color='cell_type', legend_loc='on data', legend_fontsize=7, show=False)
-# Adjust title
-plt.suptitle("Annotated Cell Clusters - Day 2", y=1.0, fontsize=12, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
 
 # Which cluster is NA? - DPI3
 na_cluster_dpi3 = dpi3_adata.obs[dpi3_adata.obs['cell_type'].isna()]['leiden_res0_5'].value_counts()
 print("NA clusters:", na_cluster_dpi3)
-
 # Cluster number
 na_cluster_number_dpi3_1 = '8'
 na_cluster_number_dpi3_2 = '7'
@@ -682,7 +498,6 @@ na_cluster_number_dpi3_2 = '7'
 # The actual cell type was assigned to the 'cell_type' column, not 'leiden_res0_5'.
 # Cluster 8 was assigned 'Proliferating basal cells' in a previous step.
 sc.tl.rank_genes_groups(dpi3_adata, groupby='leiden_res0_5', method='wilcoxon')
-
 # Look at top 15 genes for 'Proliferating basal cells'
 result = dpi3_adata.uns['rank_genes_groups']
 print(f"Top genes for cluster {na_cluster_number_dpi3_1}:")
@@ -692,7 +507,6 @@ for i in range(15):
 
 # Find marker genes for NA cluster - DPI3, cluster 7
 sc.tl.rank_genes_groups(dpi3_adata, groupby='leiden_res0_5', method='wilcoxon')
-
 # Look at top 15 genes
 result = dpi3_adata.uns['rank_genes_groups']
 print(f"Top genes for cluster {na_cluster_number_dpi3_2}:")
@@ -701,13 +515,11 @@ for i in range(15):
     print(f"{i+1}. {gene}")
 
 # Assign cluster 7 as Basal cells & cluster 8 as Germ cells (? - proliferating epithelium cells)
-
 # Add 'Basal cells' to leiden_res0_5 categories
 current_leiden_categories = dpi3_adata.obs['leiden_res0_5'].cat.categories.tolist()
 if 'Basal cells' not in current_leiden_categories:
     new_leiden_categories = current_leiden_categories + ['Basal cells']
     dpi3_adata.obs['leiden_res0_5'] = dpi3_adata.obs['leiden_res0_5'].cat.set_categories(new_leiden_categories)
-
 # Add 'Basal cells' to cell_type categories
 current_cell_type_categories = dpi3_adata.obs['cell_type'].cat.categories.tolist()
 if 'Basal cells' not in current_cell_type_categories:
@@ -721,7 +533,6 @@ current_leiden_categories = dpi3_adata.obs['leiden_res0_5'].cat.categories.tolis
 if 'Proliferating basal cells' not in current_leiden_categories:
     new_leiden_categories = current_leiden_categories + ['Proliferating basal cells']
     dpi3_adata.obs['leiden_res0_5'] = dpi3_adata.obs['leiden_res0_5'].cat.set_categories(new_leiden_categories)
-
 # Add 'Proliferating epithelium cells' to cell_type categories
 current_cell_type_categories = dpi3_adata.obs['cell_type'].cat.categories.tolist()
 if 'Proliferating basal cells' not in current_cell_type_categories:
@@ -738,10 +549,8 @@ print(dpi3_adata.obs['cell_type'].value_counts())
 # Assuming you already have dict_ann_dpi3
 dict_ann_dpi3['7'] = 'Basal cells'
 dict_ann_dpi3['8'] = 'Proliferating basal cells'
-
 # Apply
 dpi3_adata.obs["cell_type"] = dpi3_adata.obs["leiden_res0_5"].map(dict_ann_dpi3)
-
 # Verify
 print("\nDay 3 NAs:", dpi3_adata.obs['cell_type'].isna().sum())
 print("\nDay 3 cell types:")
@@ -751,223 +560,23 @@ print(dpi3_adata.obs['cell_type'].value_counts())
 
 # Create a figure with subplots
 fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
 # Annotate clusters with cell type labels using the annotation dictionary
 #dpi3_adata.obs["cell_type"] = dpi3_adata.obs["leiden_res0_5"].map(dict_ann_dpi3)
 # Visualization (legend out and on clusters)
 sc.pl.umap(dpi3_adata, color='cell_type', ax=axes[0], show=False)
 sc.pl.umap(dpi3_adata, color='cell_type', legend_loc='on data', legend_fontsize=7, ax=axes[1], show=False)
-
 # Adjust title
 plt.suptitle("Annotated Cell Clusters - Day 3", y=1.0, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
 
-# Visualization (legend out and on clusters)
-plt.rcParams["figure.figsize"] = (8,6)
-sc.pl.umap(dpi3_adata, color='cell_type', show=False)
-# Adjust title
-plt.suptitle("Annotated Cell Clusters - Day 3", y=1.0, fontsize=12, fontweight='bold')
 
-plt.tight_layout()
-plt.show()
-
-# Visualization (legend out and on clusters)
-plt.rcParams["figure.figsize"] = (6,6)
-# Adjust title
-sc.pl.umap(dpi3_adata, color='cell_type', legend_loc='on data', legend_fontsize=7, show=False)
-# Adjust title
-plt.suptitle("Annotated Cell Clusters - Day 3", y=1.0, fontsize=12, fontweight='bold')
-
-plt.tight_layout()
-plt.show()
-
-#available_genes_mock = set(mock_adata.var_names)
-
-#ciliated_cells_markers_mock = markers[markers['source'].isin(['Ciliated cells'])]['target']
-#ciliated_cells_markers_mock = ciliated_cells_markers_mock[ciliated_cells_markers_mock.isin(available_genes_mock)]
-
-#alv_macrophage_markers_mock = markers[markers['source'].isin(['Alveolar macrophages'])]['target']
-#alv_macrophage_markers_mock = alv_macrophage_markers_mock[alv_macrophage_markers_mock.isin(available_genes_mock)]
-
-#ionocytes_markers_mock = markers[markers['source'].isin(['Ionocytes'])]['target']
-#ionocytes_markers_mock = ionocytes_markers_mock[ionocytes_markers_mock.isin(available_genes_mock)]
-
-#airway_markers_mock = markers[markers['source'].isin(['Airway goblet cells'])]['target']
-#airway_markers_mock = airway_markers_mock[airway_markers_mock.isin(available_genes_mock)]
-
-#pulm_markers_1_mock = markers[markers['source'].isin(['Pulmonary alveolar type I cells'])]['target']
-#pulm_markers_1_mock = pulm_markers_1_mock[pulm_markers_1_mock.isin(available_genes_mock)]
-
-#pulm_markers_2_mock = markers[markers['source'].isin(['Pulmonary alveolar type II cells'])]['target']
-#pulm_markers_2_mock = pulm_markers_2_mock[pulm_markers_2_mock.isin(available_genes_mock)]
-
-#display(ciliated_cells_markers_mock)
-#display(alv_macrophage_markers_mock)
-#display(ionocytes_markers_mock)
-#display(airway_markers_mock)
-#display(pulm_markers_1_mock)
-#display(pulm_markers_2_mock)
-
-#marker_genes_dict_mock = {
- #   "Ciliated cells": ciliated_cells_markers_mock.head().tolist(),
- #   "Alveolar macrophages": alv_macrophage_markers_mock.head().tolist(),
- #   "Ionocytes": ionocytes_markers_mock.head().tolist(),
- #   "Airway goblet cells": airway_markers_mock.head().tolist(),
- #   "Pulmonary alveolar type I cells": pulm_markers_1_mock.head().tolist(),
- #   "Pulmonary alveolar type II cells": pulm_markers_2_mock.head().tolist()
-#}
-
-#sc.pl.stacked_violin(
-#    mock_adata, marker_genes_dict_mock, groupby=["leiden_res0_5", "cell_type"])
-
-#available_genes_dpi1 = set(dpi1_adata.var_names)
-
-#ciliated_cells_markers_dpi1 = markers[markers['source'].isin(['Ciliated cells'])]['target']
-#ciliated_cells_markers_dpi1 = ciliated_cells_markers_dpi1[ciliated_cells_markers_dpi1.isin(available_genes_dpi1)]
-
-#pulm_markers_1_dpi1 = markers[markers['source'].isin(['Pulmonary alveolar type I cells'])]['target']
-#pulm_markers_1_dpi1 = pulm_markers_1_dpi1[pulm_markers_1_dpi1.isin(available_genes_dpi1)]#
-
-#ionocytes_markers_dpi1 = markers[markers['source'].isin(['Ionocytes'])]['target']
-#ionocytes_markers_dpi1 = ionocytes_markers_dpi1[ionocytes_markers_dpi1.isin(available_genes_dpi1)]
-
-#airway_markers_dpi1 = markers[markers['source'].isin(['Airway goblet cells'])]['target']
-#airway_markers_dpi1 = airway_markers_dpi1[airway_markers_dpi1.isin(available_genes_dpi1)]
-
-#airway_epithelial_markers_dpi1 = markers[markers['source'].isin(['Airway epithelial cells'])]['target']
-#airway_epithelial_markers_dpi1 = airway_epithelial_markers_dpi1[airway_epithelial_markers_dpi1.isin(available_genes_dpi1)]
-
-#alv_macrophage_markers_dpi1 = markers[markers['source'].isin(['Alveolar macrophages'])]['target']
-#alv_macrophage_markers_dpi1 = alv_macrophage_markers_dpi1[alv_macrophage_markers_dpi1.isin(available_genes_dpi1)]
-
-
-#display(ciliated_cells_markers_dpi1)
-#display(pulm_markers_1_dpi1)
-#display(ionocytes_markers_dpi1)
-#display(airway_markers_dpi1)
-#display(airway_epithelial_markers_dpi1)
-#display(alv_macrophage_markers_dpi1)
-
-#marker_genes_dict_dpi1 = {
-#    "Ciliated cells": ciliated_cells_markers_dpi1.head().tolist(),
-#    "Pulmonary alveolar type I cells": pulm_markers_1_dpi1.head().tolist(),
-#    "Ionocytes": ionocytes_markers_dpi1.head().tolist(),
-#    "Airway goblet cells": airway_markers_dpi1.head().tolist(),
-#    "Airway epithelial cells": airway_epithelial_markers_dpi1.head().tolist(),
-#    "Alveolar macrophages": alv_macrophage_markers_dpi1.head().tolist()
-#}
-
-#sc.pl.stacked_violin(
-#    dpi1_adata, marker_genes_dict_dpi1, groupby=["leiden_res0_5", "cell_type"])
-
-#available_genes_dpi2 = set(dpi2_adata.var_names)
-
-#airway_markers_dpi2 = markers[markers['source'].isin(['Airway goblet cells'])]['target']
-#airway_markers_dpi2 = airway_markers_dpi2[airway_markers_dpi2.isin(available_genes_dpi2)]
-
-#basal_markers_dpi2 = markers[markers['source'].isin(['Basal cells'])]
-#basal_markers_dpi2 = basal_markers_dpi2[basal_markers_dpi2['target'].isin(available_genes_dpi2)]
-
-#ciliated_cells_markers_dpi2 = markers[markers['source'].isin(['Ciliated cells'])]['target']
-#ciliated_cells_markers_dpi2 = ciliated_cells_markers_dpi2[ciliated_cells_markers_dpi2.isin(available_genes_dpi2)]
-
-#ionocytes_markers_dpi2 = markers[markers['source'].isin(['Ionocytes'])]['target']
-#ionocytes_markers_dpi2 = ionocytes_markers_dpi2[ionocytes_markers_dpi2.isin(available_genes_dpi2)]
-
-#pulm_markers_1_dpi2 = markers[markers['source'].isin(['Pulmonary alveolar type I cells'])]['target']
-#pulm_markers_1_dpi2 = pulm_markers_1_dpi2[pulm_markers_1_dpi2.isin(available_genes_dpi2)]
-
-#alv_macrophage_markers_dpi2 = markers[markers['source'].isin(['Alveolar macrophages'])]['target']
-#alv_macrophage_markers_dpi2 = alv_macrophage_markers_dpi2[alv_macrophage_markers_dpi2.isin(available_genes_dpi2)]
-
-#airway_epithelial_markers_dpi2 = markers[markers['source'].isin(['Airway epithelial cells'])]['target']
-#airway_epithelial_markers_dpi2 = airway_epithelial_markers_dpi2[airway_epithelial_markers_dpi2.isin(available_genes_dpi2)]
-
-#clara_markers_dpi2 = markers[markers['source'].isin(['Clara cells'])]['target']
-#clara_markers_dpi2 = clara_markers_dpi2[clara_markers_dpi2.isin(available_genes_dpi2)]
-
-#display(airway_markers_dpi2)
-#display(basal_markers_dpi2)
-#display(ciliated_cells_markers_dpi2)
-#display(ionocytes_markers_dpi2)
-#display(pulm_markers_1_dpi2)
-#display(alv_macrophage_markers_dpi2)
-#display(airway_epithelial_markers_dpi2)
-#display(clara_markers_dpi2)
-
-#marker_genes_dict_dpi2 = {
-#    "Airway goblet cells": airway_markers_dpi2.head().tolist(),
-#    "Basal cells": basal_markers_dpi2.head().tolist(),
-#    "Ciliated cells": ciliated_cells_markers_dpi2.head().tolist(),
-#    "Ionocytes": ionocytes_markers_dpi2.head().tolist(),
-#    "Pulmonary alveolar type I cells": pulm_markers_1_dpi2.head().tolist(),
-#    "Alveolar macrophages": alv_macrophage_markers_dpi2.head().tolist(),
-#    "Airway epithelial cells": airway_epithelial_markers_dpi2.head().tolist(),
-#    "Clara cells": clara_markers_dpi2.head().tolist()
-#}
-
-#sc.pl.stacked_violin(
-#    dpi2_adata, marker_genes_dict_dpi2, groupby=["leiden_res0_5", "cell_type"])
-
-#available_genes_dpi3 = set(dpi3_adata.var_names)
-
-#ciliated_cells_markers_dpi3 = markers[markers['source'].isin(['Ciliated cells'])]['target']
-#ciliated_cells_markers_dpi3 = ciliated_cells_markers_dpi3[ciliated_cells_markers_dpi3.isin(available_genes_dpi3)]
-
-#alv_macrophage_markers_dpi3 = markers[markers['source'].isin(['Alveolar macrophages'])]['target']
-#alv_macrophage_markers_dpi3 = alv_macrophage_markers_dpi3[alv_macrophage_markers_dpi3.isin(available_genes_dpi3)]
-
-#airway_markers_dpi3 = markers[markers['source'].isin(['Airway goblet cells'])]['target']
-#airway_markers_dpi3 = airway_markers_dpi3[airway_markers_dpi3.isin(available_genes_dpi3)]
-
-#basal_markers_dpi3 = markers[markers['source'].isin(['Basal cells'])]
-#basal_markers_dpi3 = basal_markers_dpi3[basal_markers_dpi3['target'].isin(available_genes_dpi3)]
-
-#ionocytes_markers_dpi3 = markers[markers['source'].isin(['Ionocytes'])]['target']
-#ionocytes_markers_dpi3 = ionocytes_markers_dpi3[ionocytes_markers_dpi3.isin(available_genes_dpi3)]
-
-#airway_epithelial_markers_dpi3 = markers[markers['source'].isin(['Airway epithelial cells'])]['target']
-#airway_epithelial_markers_dpi3 = airway_epithelial_markers_dpi3[airway_epithelial_markers_dpi3.isin(available_genes_dpi3)]
-
-#pulm_markers_1_dpi3 = markers[markers['source'].isin(['Pulmonary alveolar type I cells'])]['target']
-#pulm_markers_1_dpi3 = pulm_markers_1_dpi3[pulm_markers_1_dpi3.isin(available_genes_dpi3)]
-
-#prolif_epit_markers_dpi3 = markers[markers['source'].isin(['Proliferating epithelium cells'])]['target']
-#prolif_epit_markers_dpi3 = prolif_epit_markers_dpi3[prolif_epit_markers_dpi3.isin(available_genes_dpi3)]
-
-#display(ciliated_cells_markers_dpi3)
-#display(alv_macrophage_markers_dpi3)
-#display(airway_markers_dpi3)
-#display(basal_markers_dpi3)
-#display(ionocytes_markers_dpi3)
-#display(airway_epithelial_markers_dpi3)
-#display(pulm_markers_1_dpi3)
-#display(prolif_epit_markers_dpi3)
-
-#marker_genes_dict_dpi3 = {
-#    "Ciliated cells": ciliated_cells_markers_dpi3.head().tolist(),
-#    "Alveolar macrophages": alv_macrophage_markers_dpi3.head().tolist(),
-#    "Airway goblet cells": airway_markers_dpi3.head().tolist(),
-#    "Basal cells": basal_markers_dpi3.head().tolist(),
-#    "Ionocytes": ionocytes_markers_dpi3.head().tolist(),
-#    "Airway epithelial cells": airway_epithelial_markers_dpi3.head().tolist(),
-#    "Pulmonary alveolar type I cells": pulm_markers_1_dpi3.head().tolist(),
-#    "Proliferating epithelium cells": prolif_epit_markers_dpi3.head().tolist()
-#}
-
-#sc.pl.stacked_violin(
-#    dpi3_adata, marker_genes_dict_dpi3, groupby=["leiden_res0_5", "cell_type"])
-
-# MOCK CELL TYPE GENES - 3B PLOT
+# MOCK CELL TYPE GENES - 3B PLOT (STACK VIOLIN)
 # Find top expressed genes per cell type
 sc.tl.rank_genes_groups(mock_adata, groupby='cell_type', method='wilcoxon')
-
 # Look at top genes
 sc.pl.rank_genes_groups(mock_adata, n_genes=10, sharey=False)
-
-# Or print them
+# Print them
 for cell_type in mock_adata.obs['cell_type'].unique():
     print(f"\n{cell_type}:")
     print(mock_adata.uns['rank_genes_groups']['names'][cell_type][:5])
@@ -985,20 +594,18 @@ marker_genes_dict_mock = {
 # MOCK STACKED VIOLIN PLOT
 import numpy as np
 sc.pl.stacked_violin(mock_adata, marker_genes_dict_mock, cmap='RdBu_r', groupby="cell_type", show=False)
-
 # Adjust title
 plt.suptitle("Marker Gene Expression - Mock", y=1.5, fontsize=14, fontweight='bold')
 plt.tight_layout()
 plt.show()
 
+# DPI1 CELL TYPE GENES - 3B PLOT (STACK VIOLIN)
 # DPI1 CELL TYPE GENES
 # Find top expressed genes per cell type
 sc.tl.rank_genes_groups(dpi1_adata, groupby='cell_type', method='wilcoxon')
-
 # Look at top genes
 sc.pl.rank_genes_groups(dpi1_adata, n_genes=10, sharey=False)
-
-# Or print them
+# Print them
 for cell_type in dpi1_adata.obs['cell_type'].unique():
     print(f"\n{cell_type}:")
     print(dpi1_adata.uns['rank_genes_groups']['names'][cell_type][:5])
@@ -1016,20 +623,18 @@ marker_genes_dict_dpi1 = {
 # DPI1 STACKED VIOLIN PLOT
 import numpy as np
 sc.pl.stacked_violin(dpi1_adata, marker_genes_dict_dpi1, cmap='RdBu_r', groupby="cell_type", show=False)
-
 # Adjust title
 plt.suptitle("Marker Gene Expression - Day 1", y=1.5, fontsize=14, fontweight='bold')
 plt.tight_layout()
 plt.show()
 
+# DPI2 CELL TYPE GENES - 3B PLOT (STACK VIOLIN)
 # DPI2 CELL TYPE GENES
 # Find top expressed genes per cell type
 sc.tl.rank_genes_groups(dpi2_adata, groupby='cell_type', method='wilcoxon')
-
 # Look at top genes
 sc.pl.rank_genes_groups(dpi2_adata, n_genes=10, sharey=False)
-
-# Or print them
+# Print them
 for cell_type in dpi2_adata.obs['cell_type'].unique():
     print(f"\n{cell_type}:")
     print(dpi2_adata.uns['rank_genes_groups']['names'][cell_type][:5])
@@ -1049,7 +654,6 @@ marker_genes_dict_dpi2 = {
 # DPI2 STACKED VIOLIN PLOT
 import numpy as np
 sc.pl.stacked_violin(dpi2_adata, marker_genes_dict_dpi2, cmap='RdBu_r', groupby="cell_type", show=False)
-
 # Adjust title
 plt.suptitle("Marker Gene Expression - Day 2", y=1.5, fontsize=14, fontweight='bold')
 plt.tight_layout()
@@ -1058,11 +662,9 @@ plt.show()
 # DPI3 CELL TYPE GENES
 # Find top expressed genes per cell type
 sc.tl.rank_genes_groups(dpi3_adata, groupby='cell_type', method='wilcoxon')
-
 # Look at top genes
 sc.pl.rank_genes_groups(dpi3_adata, n_genes=10, sharey=False)
-
-# Or print them
+# Print them
 for cell_type in dpi3_adata.obs['cell_type'].unique():
     print(f"\n{cell_type}:")
     print(dpi3_adata.uns['rank_genes_groups']['names'][cell_type][:5])
@@ -1082,7 +684,6 @@ marker_genes_dict_dpi3 = {
 # DPI3 STACKED VIOLIN PLOT
 import numpy as np
 sc.pl.stacked_violin(dpi3_adata, marker_genes_dict_dpi3, cmap='RdBu_r', groupby="cell_type", show=False)
-
 # Adjust title
 plt.suptitle("Marker Gene Expression - Day 3", y=1.5, fontsize=14, fontweight='bold')
 plt.tight_layout()
@@ -1090,28 +691,22 @@ plt.show()
 
 # VISUALIZE GENE EXPRESSION IN ANNOTATED CELLS (ACE2, ENO2) - 4A PLOT
 
-# Create a figure with 2x2 subplots
+# Create a figure with subplots
 fig, axes = plt.subplots(4, 2, figsize=(10, 18))
-
 # Mock sample
 sc.pl.umap(mock_adata, color=["ACE2"], cmap='Oranges', vmax='p95', size=8, title="Mock_ACE2", ax=axes[0,0], show=False)
 sc.pl.umap(mock_adata, color=["ENO2"], cmap='Oranges', vmax='p95', size=8, title="Mock_ENO2", ax=axes[0,1], show=False)
-
 # Day_1 sample
 sc.pl.umap(dpi1_adata, color=["ACE2"], cmap='Oranges', vmax='p95', size=8, title="Day 1_ACE2", ax=axes[1,0], show=False)
 sc.pl.umap(dpi1_adata, color=["ENO2"], cmap='Oranges', vmax='p95', size=8, title="Day 1_ENO2", ax=axes[1,1], show=False)
-
 # Day_2 sample
 sc.pl.umap(dpi2_adata, color=["ACE2"], cmap='Oranges', vmax='p95', size=8, title="Day 2_ACE2", ax=axes[2,0], show=False)
 sc.pl.umap(dpi2_adata, color=["ENO2"], cmap='Oranges', vmax='p95', size=8, title="Day 2_ENO2", ax=axes[2,1], show=False)
-
 # Day_3 sample
 sc.pl.umap(dpi3_adata, color=["ACE2"], cmap='Oranges', vmax='p95', size=8, title="Day 3_ACE2", ax=axes[3,0], show=False)
 sc.pl.umap(dpi3_adata, color=["ENO2"], cmap='Oranges', vmax='p95', size=8, title="Day 3_ENO2", ax=axes[3,1], show=False)
-
 # Adjust title
 plt.suptitle("ACE2 vs ENO2 Expression Across Timepoints", y=1.0, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
 
@@ -1119,7 +714,6 @@ plt.show()
 
 # Create a figure with 2x2 subplots
 fig, axes = plt.subplots(2, 2, figsize=(10, 9))
-
 # Mock sample
 sc.pl.umap(mock_adata, color=["ACE2"], cmap='Oranges', vmax='p95', size=8, title="Mock_ACE2", ax=axes[0,0], show=False)
 # Day_1 sample
@@ -1130,223 +724,42 @@ sc.pl.umap(dpi2_adata, color=["ACE2"], cmap='Oranges', vmax='p95', size=8, title
 sc.pl.umap(dpi3_adata, color=["ACE2"], cmap='Oranges', vmax='p95', size=8, title="Day 3_ACE2", ax=axes[1,1], show=False)
 # Adjust title
 plt.suptitle("ACE2 Expression Across Timepoints", y=1.0, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.show()
 
-# VISUALIZE GENE EXPRESSION IN ANNOTATED CELLS (ACE2, ENO2) - MOCK
-
-# Create a figure with 2x2 subplots
-fig, axes = plt.subplots(1, 2, figsize=(8, 4))
-
-# Day_1 sample
-sc.pl.umap(mock_adata, color=["ACE2"], cmap='Oranges', vmax='p95', size=8, title="ACE2_Mock", ax=axes[0], show=False)
-sc.pl.umap(mock_adata, color=["ENO2"], cmap='Oranges', vmax='p95', size=8, title="ENO2_Mock", ax=axes[1], show=False)
-
-# Adjust title
-plt.suptitle("ACE2 vs ENO2 Expression - Mock", y=1.0, fontsize=14, fontweight='bold')
-
-plt.tight_layout()
-plt.show()
-
-# VISUALIZE GENE EXPRESSION IN ANNOTATED CELLS (ACE2, ENO2) - DAY 1
-
-# Create a figure with 2x2 subplots
-fig, axes = plt.subplots(1, 2, figsize=(8, 4))
-
-# Day_1 sample
-sc.pl.umap(dpi1_adata, color=["ACE2"], cmap='Oranges', vmax='p95', size=8, title="ACE2_Day1", ax=axes[0], show=False)
-sc.pl.umap(dpi1_adata, color=["ENO2"], cmap='Oranges', vmax='p95', size=8, title="ENO2_Day1", ax=axes[1], show=False)
-
-# Adjust title
-plt.suptitle("ACE2 vs ENO2 Expression - Day 1", y=1.0, fontsize=14, fontweight='bold')
-
-plt.tight_layout()
-plt.show()
-
-# VISUALIZE GENE EXPRESSION IN ANNOTATED CELLS (ACE2, ENO2) - DAY 2
-
-# Create a figure with 2x2 subplots
-fig, axes = plt.subplots(1, 2, figsize=(8, 4))
-
-# Day_2 sample
-sc.pl.umap(dpi2_adata, color=["ACE2"], cmap='Oranges', vmax='p95', size=8, title="ACE2_Day2", ax=axes[0], show=False)
-sc.pl.umap(dpi2_adata, color=["ENO2"], cmap='Oranges', vmax='p95', size=8, title="ENO2_Day2", ax=axes[1], show=False)
-
-# Adjust title
-plt.suptitle("ACE2 vs ENO2 Expression - Day 2", y=1.0, fontsize=14, fontweight='bold')
-
-plt.tight_layout()
-plt.show()
-
-# VISUALIZE GENE EXPRESSION IN ANNOTATED CELLS (ACE2, ENO2) - DAY 3
-
-# Create a figure with 2x2 subplots
-fig, axes = plt.subplots(1, 2, figsize=(8, 4))
-
-# Day_3 sample
-sc.pl.umap(dpi3_adata, color=["ACE2"], cmap='Oranges', vmax='p95', size=8, title="ACE2_Day3", ax=axes[0], show=False)
-sc.pl.umap(dpi3_adata, color=["ENO2"], cmap='Oranges', vmax='p95', size=8, title="ENO2_Day3", ax=axes[1], show=False)
-
-# Adjust title
-plt.suptitle("ACE2 vs ENO2 Expression - Day 3", y=1.0, fontsize=14, fontweight='bold')
-
-plt.tight_layout()
-plt.show()
-
-# Day_1 sample
-plt.rcParams["figure.figsize"] = (6,6)
-
-sc.pl.umap(dpi3_adata, color=["ACE2"], cmap='Oranges', vmax='p95', size=8, title="ACE2_Day3", show=False)
-
-# Adjust title
-plt.suptitle("ACE2 vs ENO2 Expression - Day 3", y=1.0, fontsize=14, fontweight='bold')
-
-plt.tight_layout()
-plt.show()
-
-# VISUALIZE GENE EXPRESSION IN ANNOTATED CELLS (ACE2, CTSL, TMPRSS2, TMPRSS4)
+# VISUALIZE GENE EXPRESSION IN ANNOTATED CELLS (ACE2, CTSL, TMPRSS2, TMPRSS4) - 4A PLOT
 import matplotlib.pyplot as plt
-
 # Create a figure with 4x4 subplots
 fig, axes = plt.subplots(4, 4, figsize=(16, 12))
-
 # Genes to plot
 genes = ['ACE2', 'CTSL', 'TMPRSS2', 'TMPRSS4']
-
 # Row 0: Mock
 sc.pl.umap(mock_adata, color='ACE2', cmap='Oranges', vmax='p95', size=8, title='Mock_ACE2', ax=axes[0,0], show=False)
 sc.pl.umap(mock_adata, color='CTSL', cmap='Oranges', vmax='p95', size=8, title='Mock_CTSL', ax=axes[0,1], show=False)
 sc.pl.umap(mock_adata, color='TMPRSS2', cmap='Oranges', vmax='p95', size=8, title='Mock_TMPRSS2', ax=axes[0,2], show=False)
 sc.pl.umap(mock_adata, color='TMPRSS4', cmap='Oranges', vmax='p95', size=8, title='Mock_TMPRSS4', ax=axes[0,3], show=False)
-
 # Row 1: Day 1
 sc.pl.umap(dpi1_adata, color='ACE2', cmap='Oranges', vmax='p95', size=8, title='Day1_ACE2', ax=axes[1,0], show=False)
 sc.pl.umap(dpi1_adata, color='CTSL', cmap='Oranges', vmax='p95', size=8, title='Day1_CTSL', ax=axes[1,1], show=False)
 sc.pl.umap(dpi1_adata, color='TMPRSS2', cmap='Oranges', vmax='p95', size=8, title='Day1_TMPRSS2', ax=axes[1,2], show=False)
 sc.pl.umap(dpi1_adata, color='TMPRSS4', cmap='Oranges', vmax='p95', size=8, title='Day1_TMPRSS4', ax=axes[1,3], show=False)
-
 # Row 2: Day 2
 sc.pl.umap(dpi2_adata, color='ACE2', cmap='Oranges', vmax='p95', size=8, title='Day2_ACE2', ax=axes[2,0], show=False)
 sc.pl.umap(dpi2_adata, color='CTSL', cmap='Oranges', vmax='p95', size=8, title='Day2_CTSL', ax=axes[2,1], show=False)
 sc.pl.umap(dpi2_adata, color='TMPRSS2', cmap='Oranges', vmax='p95', size=8, title='Day2_TMPRSS2', ax=axes[2,2], show=False)
 sc.pl.umap(dpi2_adata, color='TMPRSS4', cmap='Oranges', vmax='p95', size=8, title='Day2_TMPRSS4', ax=axes[2,3], show=False)
-
 # Row 3: Day 3
 sc.pl.umap(dpi3_adata, color='ACE2', cmap='Oranges', vmax='p95', size=8, title='Day3_ACE2', ax=axes[3,0], show=False)
 sc.pl.umap(dpi3_adata, color='CTSL', cmap='Oranges', vmax='p95', size=8, title='Day3_CTSL', ax=axes[3,1], show=False)
 sc.pl.umap(dpi3_adata, color='TMPRSS2', cmap='Oranges', vmax='p95', size=8, title='Day3_TMPRSS2', ax=axes[3,2], show=False)
 sc.pl.umap(dpi3_adata, color='TMPRSS4', cmap='Oranges', vmax='p95', size=8, title='Day3_TMPRSS4', ax=axes[3,3], show=False)
-
 # Adjust title
 plt.suptitle("Viral Entry Gene Expression", y=1.0, fontsize=14, fontweight='bold')
-
 plt.tight_layout()
 plt.savefig('gene_expression_4x4.png', dpi=300, bbox_inches='tight')
 plt.show()
 
-# VISUALIZE GENE EXPRESSION IN ANNOTATED CELLS (ACE2, CTSL, TMPRSS2, TMPRSS4) MOCK - 4A PLOT
-
-# Create a figure with subplots
-fig, axes = plt.subplots(1, 4, figsize=(26, 6))
-
-# Day_1 sample
-sc.pl.umap(mock_adata, color=["ACE2"], cmap='Oranges', vmax='p95', size=20, title="ACE2_Mock", ax=axes[0], show=False)
-sc.pl.umap(mock_adata, color=["CTSL"], cmap='Oranges', vmax='p95', size=20, title="CTSL_Mock", ax=axes[1], show=False)
-sc.pl.umap(mock_adata, color=["TMPRSS2"], cmap='Oranges', vmax='p95', size=20, title="TMPPRSS2_Mock", ax=axes[2], show=False)
-sc.pl.umap(mock_adata, color=["TMPRSS4"], cmap='Oranges', vmax='p95', size=20, title="TMPPRSS4_Mock", ax=axes[3], show=False)
-
-# Adjust title
-plt.suptitle("Viral Entry Gene Expression - Mock", y=1.0, fontsize=14, fontweight='bold')
-
-plt.tight_layout()
-plt.show()
-
-# VISUALIZE GENE EXPRESSION IN ANNOTATED CELLS (ACE2, CTSL, TMPRSS2, TMPRSS4) DAY1 - 4A PLOT
-
-# Create a figure with subplots
-fig, axes = plt.subplots(1, 4, figsize=(26, 6))
-
-# Day_1 sample
-sc.pl.umap(dpi1_adata, color=["ACE2"], cmap='Oranges', vmax='p95', size=20, title="ACE2_Day 1", ax=axes[0], show=False)
-sc.pl.umap(dpi1_adata, color=["CTSL"], cmap='Oranges', vmax='p95', size=20, title="CTSL_Day 1", ax=axes[1], show=False)
-sc.pl.umap(dpi1_adata, color=["TMPRSS2"], cmap='Oranges', vmax='p95', size=20, title="TMPPRSS2_Day 1", ax=axes[2], show=False)
-sc.pl.umap(dpi1_adata, color=["TMPRSS4"], cmap='Oranges', vmax='p95', size=20, title="TMPPRSS4_Day 1", ax=axes[3], show=False)
-
-# Adjust title
-plt.suptitle("Viral Entry Gene Expression - Day 1", y=1.0, fontsize=14, fontweight='bold')
-
-plt.tight_layout()
-plt.show()
-
-# VISUALIZE GENE EXPRESSION IN ANNOTATED CELLS (ACE2, CTSL, TMPRSS2, TMPRSS4) DAY2 - 4A PLOT
-
-# Create a figure with subplots
-fig, axes = plt.subplots(1, 4, figsize=(26, 6))
-
-# Day_1 sample
-sc.pl.umap(dpi2_adata, color=["ACE2"], cmap='Oranges', vmax='p95', size=20, title="ACE2_Day 2", ax=axes[0], show=False)
-sc.pl.umap(dpi2_adata, color=["CTSL"], cmap='Oranges', vmax='p95', size=20, title="CTSL_Day 2", ax=axes[1], show=False)
-sc.pl.umap(dpi2_adata, color=["TMPRSS2"], cmap='Oranges', vmax='p95', size=20, title="TMPPRSS2_Day 2", ax=axes[2], show=False)
-sc.pl.umap(dpi2_adata, color=["TMPRSS4"], cmap='Oranges', vmax='p95', size=20, title="TMPPRSS4_Day 2", ax=axes[3], show=False)
-
-# Adjust title
-plt.suptitle("Viral Entry Gene Expression - Day 2", y=1.0, fontsize=14, fontweight='bold')
-
-plt.tight_layout()
-plt.show()
-
-# VISUALIZE GENE EXPRESSION IN ANNOTATED CELLS (ACE2, CTSL, TMPRSS2, TMPRSS4) DAY3 - 4A PLOT
-
-# Create a figure with subplots
-fig, axes = plt.subplots(1, 4, figsize=(26, 6))
-
-# Day_1 sample
-sc.pl.umap(dpi3_adata, color=["ACE2"], cmap='Oranges', vmax='p95', size=20, title="ACE2_Day 3", ax=axes[0], show=False)
-sc.pl.umap(dpi3_adata, color=["CTSL"], cmap='Oranges', vmax='p95', size=20, title="CTSL_Day 3", ax=axes[1], show=False)
-sc.pl.umap(dpi3_adata, color=["TMPRSS2"], cmap='Oranges', vmax='p95', size=20, title="TMPPRSS2_Day 3", ax=axes[2], show=False)
-sc.pl.umap(dpi3_adata, color=["TMPRSS4"], cmap='Oranges', vmax='p95', size=20, title="TMPPRSS4_Day 3", ax=axes[3], show=False)
-
-# Adjust title
-plt.suptitle("Viral Entry Gene Expression - Day 3", y=1.0, fontsize=14, fontweight='bold')
-
-plt.tight_layout()
-plt.show()
-
-sc.pl.heatmap(
-    mock_adata, marker_genes_dict_mock, groupby="leiden_res0_5", cmap="Reds", dendrogram=True
-)
-
-# Define viral entry genes (from the article Figure 4)
-entry_genes = ['ACE2', 'TMPRSS2', 'CTSL', 'TMPRSS4', 'DPP4', 'ANPEP']
-
-# Make matrixplot (better than heatmap for this)
-sc.pl.matrixplot(mock_adata,
-                 entry_genes,
-                 groupby='cell_type',  # ← cell_type, not leiden!
-                 standard_scale='var',  # Z-score normalization
-                 cmap='RdBu_r',
-                 save='_fig4B_mock.png')
-
-# 2. Concatenate
-mock_adata.obs['condition'] = 'Mock'
-dpi3_adata.obs['condition'] = 'Day_3'
-combined_adata = ad.concat([mock_adata, dpi3_adata])
-
-# 3. Make Figure 4B (ciliated cells only)
-ciliated = combined_adata[combined_adata.obs['cell_type'] == 'Ciliated cells']
-
-sc.pl.matrixplot(ciliated,
-                 ['ACE2', 'TMPRSS2', 'CTSL', 'TMPRSS4'],
-                 groupby='condition',
-                 standard_scale='var',
-                 cmap='RdBu',
-                 swap_axes=True,
-                 title = 'Ciliated Cells')
-
 # HEATMAP PLOT - FIGURE 4B
-
-import matplotlib.pyplot as plt
 
 # 1. Concatenate
 mock_adata.obs['condition'] = 'Mock'
@@ -1354,10 +767,8 @@ dpi1_adata.obs['condition'] = 'Day_1'
 dpi2_adata.obs['condition'] = 'Day_2'
 dpi3_adata.obs['condition'] = 'Day_3'
 combined_adata = ad.concat([mock_adata, dpi1_adata, dpi2_adata, dpi3_adata])
-
 # 2. Make Figure 4B (ciliated cells only)
 ciliated = combined_adata[combined_adata.obs['cell_type'] == 'Ciliated cells']
-
 # 3. Create plot
 sc.pl.heatmap(ciliated,
               ['ACE2', 'TMPRSS2', 'CTSL', 'TMPRSS4'],
@@ -1368,55 +779,11 @@ sc.pl.heatmap(ciliated,
               dendrogram=False,
               show_gene_labels=True,
               show=False)
-
 # 4. Get current figure and add title
 fig = plt.gcf()
 fig.suptitle('Ciliated Cells', fontsize=12, fontweight='bold', y=0.95)
 plt.savefig('fig4B_ciliated.png', bbox_inches='tight', dpi=300)
 plt.show()
-
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-
-# Genes to plot
-genes = ['ACE2', 'TMPRSS2', 'CTSL', 'TMPRSS4']
-
-# Calculate mean expression per condition
-mock_ciliated = ciliated[ciliated.obs['condition'] == 'Mock']
-dpi3_ciliated = ciliated[ciliated.obs['condition'] == 'Day_3']
-
-# Get mean expression
-mean_data = []
-for gene in genes:
-    mock_mean = mock_ciliated[:, gene].X.mean()
-    dpi3_mean = dpi3_ciliated[:, gene].X.mean()
-    mean_data.append({'Gene': gene, 'Mock': mock_mean, 'Day_3': dpi3_mean})
-
-df = pd.DataFrame(mean_data)
-df = df.set_index('Gene')
-
-# Z-score normalize
-df_zscore = (df - df.mean()) / df.std()
-
-# Plot
-fig, ax = plt.subplots(figsize=(4, 5))
-sns.heatmap(df_zscore, cmap='RdBu_r', center=0,
-            vmin=-2, vmax=2,
-            cbar_kws={'label': 'Mean expression\n(z-score)'},
-            ax=ax)
-
-ax.set_title('Ciliated Cells', fontsize=12, fontweight='bold', pad=10)
-ax.set_xlabel('Condition', fontsize=10)
-ax.set_ylabel('Gene', fontsize=10)
-
-plt.tight_layout()
-plt.savefig('fig4B_averaged_clean.png', bbox_inches='tight', dpi=300)
-plt.show()
-
-# Also print actual values to check
-print("Mean expression values:")
-print(df)
 
 # TRAJECTORY INFERENCE
 
