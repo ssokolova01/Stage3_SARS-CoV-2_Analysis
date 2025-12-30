@@ -220,6 +220,7 @@ The co-existence of ciliated cells fractions with ACE2 expression alongside prol
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **REFERENCES**
+
 *Bissonnette EY, Lauzon-Joset JF, Debley JS, Ziegler SF. Cross-Talk Between Alveolar Macrophages and Lung Epithelial Cells is Essential to Maintain Lung Homeostasis. Front Immunol. 2020 Oct 15;11:583042. doi: 10.3389/fimmu.2020.583042. PMID: 33178214; PMCID: PMC7593577.*
 
 *Coden ME, Loffredo LF, Abdala-Valencia H, Berdnikovs S. Comparative Study of SARS-CoV-2, SARS-CoV-1, MERS-CoV, HCoV-229E and Influenza Host Gene Expression in Asthma: Importance of Sex, Disease Severity, and Epithelial Heterogeneity. Viruses. 2021 Jun 5;13(6):1081. doi: 10.3390/v13061081. PMID: 34198852; PMCID: PMC8226441.*
