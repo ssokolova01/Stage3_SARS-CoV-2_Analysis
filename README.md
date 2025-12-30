@@ -1,4 +1,4 @@
-### Stage3_SARS-CoV-2_Analysis
+## Stage3_SARS-CoV-2_Analysis
 ## SARS-Cov-2 Infection Dynamics: trajectory analysis on scRNA-seq data from SARS-CoV-2-infected human bronchial epithelial cells (HBEC).
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -31,13 +31,15 @@ To perform manual annotation, differentially expressed genes for each NA cluster
 ***Contradictory findings.*** Comparison analysis of viral entry gene expression in ciliated cells revealed some inconsistencies with the original study. Though ACE2 (mean expression: 0.04 overall, 0.04 in ciliated cells) and CTSL (0.20 overall, 0.42 in ciliated cells) expression rates were compatible with Ravindra et al. (2021), TMPRSS2 and TMPRSS4 genes expression pattern differed to the published results. While the original study reports higher TMPRSS2 expression, my analysis revealed that TMPRSS4 expression (1.72 overall, 1.20 in ciliated cells) was approximately 6-fold higher than TMPRSS2 (0.29 overall, 0.36 in ciliated cells). This inconsistency was first noted during gene expression visual analysis by heatmap. This finding may reflect differences in normalization and batch correction parameters, computational pipeline implementation or some biological variations across samples in analyzed datasets. (***Figures 9, 18, 19***)
 
 <img width="834" height="683" alt="image" src="https://github.com/user-attachments/assets/4c728aaf-2d84-408c-9f18-67b12881d98c" />
+
 ***Figure 18.*** ACE2, ENO2, CTSL, TMPRSS2, TMPRSS4 gene expression on separate pseudotime trajectories.
 
 <img width="882" height="721" alt="image" src="https://github.com/user-attachments/assets/3a0f6532-a4fb-4db3-9cb0-bd7c78383262" />
+
 ***Figure 19.*** Cell annotated UMAP plot of ACE2, CTSL, TMPRSS2, TMPRSS4 gene expression on integrated dataset combining all timepoints.
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-***QUESTION 1.***
+***CELL TYPES IDENTIFIED AT THE DIFFERENT STAGES OF SARS-CoV-2 INFECTION***
 Ten distinct cell types were identified across all four datasets (***Tables 1a, 1b; Figures 1a, 2a, 3a, 4a, 6***). Five cell types were present at all timepoints: ciliated cells, airway goblet cells, ionocytes, alveolar macrophages, and pulmonary alveolar type I cells (AT1). Additional cell types were timepoint-specific: pulmonary alveolar type II cells (AT2) appeared only in Mock samples; airway epithelial cells were detected in Day 1 and Day 2 samples; Clara cells (club cells) were identified only in Day 2 samples; proliferated basal cell appeared in Day 3 samples. Basal cells emerged at Day 2 and Day 3, and at Day 3 a distinct proliferating basal cell population appeared.
 
 ***Table 1a.*** Cell type composition across SARS-CoV-2 infection time course.
@@ -51,27 +53,35 @@ Pseudotime trajectory analysis was applied to both individual datasets (shows ce
 Two rare cell types reported in the original study, pulmonary neuroendocrine cells (PNECs) and tuft cells, were not identified in my analysis. These results likely related to annotation approaches and detection sensitivity. In respect that these cell types represent <1-2% of airway epithelial cells, it makes them challenging to detect with automated annotation methods. Additionally, ionocytes and tuft cells share overlapping gene expression patterns, because they both derive from secretory progenitors and are both involved in airway immunity. This potentially lead to their merged classification in my analysis. (***Davis JD, 2021***)
 
 <img width="940" height="409" alt="image" src="https://github.com/user-attachments/assets/2449866d-2d16-4b15-a1ae-ee5fbf1e6fcd" />
+
 ***Figure 1a.*** Cell annotated UMAP plots for Mock samples (negative control). 
 
 <img width="940" height="396" alt="image" src="https://github.com/user-attachments/assets/d8cebbd0-d5a8-4552-a9a1-c5d21eb0a02c" />
+
 ***Figure 1b.*** Pseudotime analysis of Mock samples displayed on graph layout.
 
 <img width="1034" height="451" alt="image" src="https://github.com/user-attachments/assets/36ebc413-66df-46fd-89f2-7a4d39ce9fa6" />
+
 ***Figure 2a.*** Cell annotated UMAP plots of Day 1 post-infection samples. 
 
 <img width="1034" height="436" alt="image" src="https://github.com/user-attachments/assets/3cf4f4d9-f6e4-4817-83c9-7ba396a9adac" />
+
 ***Figure 2b.*** Pseudotime analysis of Day 1 post-infection samples displayed on graph layout.
 
 <img width="1046" height="455" alt="image" src="https://github.com/user-attachments/assets/dab4256b-7228-4133-a8c3-0b346ea74af3" />
+
 ***Figure 3a.*** Cell annotated UMAP plots of Day 2 post-infection samples. 
 
 <img width="1034" height="436" alt="image" src="https://github.com/user-attachments/assets/f561da8c-80ce-4f9c-bce8-9a51cf2d909a" />
+
 ***Figure 3b.*** Pseudotime analysis of Day 2 post-infection samples displayed on graph layout.
 
 <img width="1034" height="449" alt="image" src="https://github.com/user-attachments/assets/fb202e28-bc18-40a3-902b-2a6bcc2704d0" />
+
 ***Figure 4a.*** Cell annotated UMAP plots of Day 3 post-infection samples. 
 
 <img width="1034" height="436" alt="image" src="https://github.com/user-attachments/assets/8d020366-7b2d-440a-840c-28f060f51ee2" />
+
 ***Figure 4b.*** Pseudotime analysis of Day 3 post-infection samples displayed on graph layout.
 
 
