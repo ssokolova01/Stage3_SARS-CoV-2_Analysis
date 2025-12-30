@@ -238,7 +238,7 @@ The co-existence of ciliated cells fractions with ACE2 expression alongside prol
 *Zhang H, Rostami MR, Leopold PL, Mezey JG, O'Beirne SL, Strulovici-Barel Y, Crystal RG. Expression of the SARS-CoV-2 ACE2 Receptor in the Human Airway Epithelium. Am J Respir Crit Care Med. 2020 Jul 15;202(2):219-229. doi: 10.1164/rccm.202003-0541OC. PMID: 32432483; PMCID: PMC7365377.*
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**APPENDICES: ADDITIONAL FIGURES**
+# **APPENDICES: ADDITIONAL FIGURES**
 
 ***VIOLIN PLOTS WITH RANGE-SCALED MARKER GENE EXPRESSION ACROSS CELL ANNOTATED CLUSTERS***
 
