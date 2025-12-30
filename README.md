@@ -38,12 +38,12 @@ To perform manual annotation, differentially expressed genes for each NA cluster
 
 ***Figure 19.*** Cell annotated UMAP plot of ACE2, CTSL, TMPRSS2, TMPRSS4 gene expression on integrated dataset combining all timepoints.
 
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-***CELL TYPES IDENTIFIED AT THE DIFFERENT STAGES OF SARS-CoV-2 INFECTION***
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# ***CELL TYPES IDENTIFIED AT THE DIFFERENT STAGES OF SARS-CoV-2 INFECTION***
 Ten distinct cell types were identified across all four datasets (***Tables 1a, 1b; Figures 1a, 2a, 3a, 4a, 6***). Five cell types were present at all timepoints: ciliated cells, airway goblet cells, ionocytes, alveolar macrophages, and pulmonary alveolar type I cells (AT1). Additional cell types were timepoint-specific: pulmonary alveolar type II cells (AT2) appeared only in Mock samples; airway epithelial cells were detected in Day 1 and Day 2 samples; Clara cells (club cells) were identified only in Day 2 samples; proliferated basal cell appeared in Day 3 samples. Basal cells emerged at Day 2 and Day 3, and at Day 3 a distinct proliferating basal cell population appeared.
 
 ***Table 1a.*** Cell type composition across SARS-CoV-2 infection time course.
-<img width="658" height="435" alt="image" src="https://github.com/user-attachments/assets/533e04f7-fa2b-4d25-8e8d-4c313f05cdc5" />
+<img width="660" height="433" alt="image" src="https://github.com/user-attachments/assets/aca26f5c-b106-46b1-8e02-24aba6d6b04e" />
 
 ***Table 1b.*** Cell type composition across SARS-CoV-2 infection time course (alternative version).
 <img width="660" height="274" alt="image" src="https://github.com/user-attachments/assets/ce9aa98e-457d-4622-b358-a0629f6eddfe" />
@@ -83,6 +83,30 @@ Two rare cell types reported in the original study, pulmonary neuroendocrine cel
 <img width="1034" height="436" alt="image" src="https://github.com/user-attachments/assets/8d020366-7b2d-440a-840c-28f060f51ee2" />
 
 ***Figure 4b.*** Pseudotime analysis of Day 3 post-infection samples displayed on graph layout.
+
+<img width="1028" height="468" alt="image" src="https://github.com/user-attachments/assets/99842114-e35b-4b28-b86e-0211737be090" />
+
+***Figure 5.*** PAGA graph visualization for Mock (negative control), Day 1, Day 2 and Day 3 post-infection samples. 
+
+<img width="1028" height="437" alt="image" src="https://github.com/user-attachments/assets/65468eff-2c18-49ee-818b-6a5eb09f003b" />
+
+***Figure 6.*** Cell annotated UMAP plot for merged (Mock, Day 1, Day 2 and Day 3) datasets (integrated analysis).
+
+<img width="1028" height="530" alt="image" src="https://github.com/user-attachments/assets/6f18cfc2-342a-4d90-ae57-ee16a1784e7d" />
+
+***Figure 7.*** Pseudotime analysis of merged (Mock, Day 1, Day 2 and Day 3) datasets (integrated analysis).
+
+<img width="632" height="593" alt="image" src="https://github.com/user-attachments/assets/492cb161-d516-4325-a30d-627da3cb6ef2" />
+
+***Figure 8.*** PAGA graph visualization merged (Mock, Day 1, Day 2 and Day 3) datasets (integrated analysis). 
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
 
 
 
