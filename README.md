@@ -238,8 +238,59 @@ The co-existence of ciliated cells fractions with ACE2 expression alongside prol
 *Zhang H, Rostami MR, Leopold PL, Mezey JG, O'Beirne SL, Strulovici-Barel Y, Crystal RG. Expression of the SARS-CoV-2 ACE2 Receptor in the Human Airway Epithelium. Am J Respir Crit Care Med. 2020 Jul 15;202(2):219-229. doi: 10.1164/rccm.202003-0541OC. PMID: 32432483; PMCID: PMC7365377.*
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**APPENDICES: ADDITIONAL FIGURES**
 
+***VIOLIN PLOTS WITH RANGE-SCALED MARKER GENE EXPRESSION ACROSS CELL ANNOTATED CLUSTERS***
 
+<img width="1189" height="517" alt="image" src="https://github.com/user-attachments/assets/f0659831-bf50-4756-aa19-fcc07c99fe59" />
 
+***Figure App 1a.*** Violin plot for Mock timepoint showing range-scaled expression of marker genes across clusters.
 
+<img width="1185" height="535" alt="image" src="https://github.com/user-attachments/assets/e9a30f7b-280c-4d98-be24-b28849b2d9f5" />
 
+***Figure App 1b.*** Violin plot for Day 1 timepoint showing range-scaled expression of marker genes across clusters.
+
+<img width="1472" height="584" alt="image" src="https://github.com/user-attachments/assets/387e7f93-6601-454e-b246-cab1d9822c5e" />
+
+***Figure App 1c.*** Violin plot for Day 2 timepoint showing range-scaled expression of marker genes across clusters.
+
+<img width="1472" height="633" alt="image" src="https://github.com/user-attachments/assets/bdcbf75e-cf68-4f8a-a306-2fb8b31e98ee" />
+
+***Figure App 1d.*** Violin plot for Day 3 timepoint showing range-scaled expression of marker genes across clusters.
+
+<img width="1472" height="595" alt="image" src="https://github.com/user-attachments/assets/f6429b26-7e47-41c5-9548-b912219e1559" />
+
+***Figure App 2.*** Violin plot for integrated timepoints showing range-scaled expression of marker genes across clusters.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+***VIRAL ENTRY GENES AND ENO2 GENE EXPRESSION ACROSS INDIVIDUAL AND INTEGRATED TIMEPOINTS***
+
+<img width="1586" height="1205" alt="image" src="https://github.com/user-attachments/assets/55f55a4e-1dc3-4b26-837f-1232add4530f" />
+
+***Figure App 3.*** UMAPs for viral entry gene expression across individual timepoints.
+
+<img width="1782" height="1198" alt="image" src="https://github.com/user-attachments/assets/53ada8c8-71b4-45ae-8ce6-30769ca817d8" />
+
+***Figure App 4a.*** Pseudotime trajectory for viral entry and ENO2 gene expression at Mock timepoint.
+
+<img width="1782" height="1198" alt="image" src="https://github.com/user-attachments/assets/6cbe4a6d-0a1e-4f3d-a900-1a61bb4b69f8" />
+
+***Figure App 4b.*** Pseudotime trajectory for viral entry and ENO2 gene expression at Day 1 timepoint.
+
+<img width="1782" height="1198" alt="image" src="https://github.com/user-attachments/assets/59189484-0f1f-4ecd-8382-3dd7e7de4845" />
+
+***Figure App 4c.*** Pseudotime trajectory for viral entry and ENO2 gene expression at Day 2 timepoint.
+
+<img width="1782" height="1198" alt="image" src="https://github.com/user-attachments/assets/37993695-6d36-4129-acbe-379fbf317bf0" />
+
+***Figure App 4d.*** Pseudotime trajectory for viral entry and ENO2 gene expression at Day 3 timepoint.
+
+<img width="984" height="804" alt="image" src="https://github.com/user-attachments/assets/00862413-1841-487d-bddb-f109b22b078f" />
+
+***Figure App 5.*** UMAPs for viral entry gene expression for integrated timepoints.
+
+<img width="1185" height="804" alt="image" src="https://github.com/user-attachments/assets/ac77fcdc-fd9b-425b-abcf-0d2b54ae9537" />
+
+***Figure App 6.*** Pseudotime trajectory for viral entry and ENO2 gene expression for integrated timepoints.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
